@@ -30,14 +30,3 @@ Para generar el PDF optimizado que enviarás a las convocatorias de empleo, sigu
 
 ---
 
-## Cómo Publicar tu Portafolio Web Gratis en GitHub Pages
-
-Para tener tu CV interactivo disponible en internet con una URL pública que puedas añadir a tu CV impreso y a tu LinkedIn (por ejemplo: `https://flavio-bravo.github.io/`):
-
-1.  Crea una cuenta gratuita en [GitHub](https://github.com/) si aún no la tienes.
-2.  Crea un nuevo repositorio público llamado `flavio-bravo` (o el nombre que prefieras).
-3.  Sube estos archivos (`index.html`, `style.css`, `script.js`) a la rama principal (`main` o `master`).
-4.  En la configuración de tu repositorio (tab **Settings**), ve a la sección **Pages** (en el menú lateral izquierdo).
-5.  En **Build and deployment**, selecciona la fuente como **Deploy from a branch**.
-6.  Elige la rama `main` (o `master`) y la carpeta `/ (root)`. Haz clic en **Save**.
-7.  En unos minutos, tu portafolio estará publicado en una dirección web como: `https://<tu-usuario>.github.io/<nombre-del-repositorio>/`.
