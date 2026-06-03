@@ -1,4 +1,4 @@
-﻿/* script.js — Theme toggle, typed animation, scroll spy, stat counter */
+/* script.js — Theme toggle, typed animation, scroll spy, stat counter */
 (function () {
     "use strict";
 
@@ -27,7 +27,7 @@
     const phrases = [
         "Analista de Datos",
         "Especialista SSOMA",
-        "Automatizacion Python",
+        "Automatización Python",
         "Power BI & SQL",
         "SIG ISO 9001/14001/45001"
     ];

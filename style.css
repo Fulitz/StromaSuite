@@ -669,7 +669,42 @@ strong { font-weight: 600; }
         text-align: left !important;
         display: block !important;
     }
-    .hero-content { display: block !important; max-width: 100% !important; }
+    .hero-content {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+    .avatar-ring {
+        display: block !important;
+        width: 75pt !important;
+        height: 75pt !important;
+        margin: 0 20pt 0 0 !important;
+        flex-shrink: 0 !important;
+        position: relative !important;
+    }
+    .avatar-inner {
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 50% !important;
+        border: 1px solid #ccc !important;
+        overflow: hidden !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    .avatar-inner img {
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+    }
+    .hero-text {
+        flex: 1 !important;
+        text-align: left !important;
+    }
 
     .hero-name {
         font-size: 22pt !important; font-weight: bold !important;
@@ -702,16 +737,17 @@ strong { font-weight: 600; }
     .cv-section {
         opacity: 1 !important; transform: none !important;
         margin-bottom: 18pt !important;
-        page-break-inside: avoid !important;
     }
     .section-head {
         border-bottom: 1pt solid #000 !important;
         padding-bottom: 3pt !important; margin-bottom: 8pt !important;
         display: block !important;
+        page-break-after: avoid !important;
     }
     .section-title {
         font-size: 11pt !important; font-weight: bold !important;
         text-transform: uppercase !important; letter-spacing: .5pt !important;
+        page-break-after: avoid !important;
     }
 
     /* Timeline */
@@ -744,7 +780,7 @@ strong { font-weight: 600; }
     .ach-label { font-weight: bold !important; }
 
     /* Education */
-    .edu-card { display: block !important; border: none !important; padding: 0 !important; background: none !important; }
+    .edu-card { display: block !important; border: none !important; padding: 0 !important; background: none !important; page-break-inside: avoid !important; }
     .edu-top  { display: flex !important; justify-content: space-between !important; }
     .edu-institution { font-size: 10.5pt !important; font-weight: bold !important; }
     .edu-degree { font-size: 10pt !important; font-style: italic !important; font-weight: bold !important; }
@@ -752,7 +788,7 @@ strong { font-weight: 600; }
 
     /* Skills */
     .skills-grid { display: block !important; }
-    .skill-group { border: none !important; background: none !important; padding: 0 !important; margin-bottom: 7pt !important; }
+    .skill-group { border: none !important; background: none !important; padding: 0 !important; margin-bottom: 7pt !important; page-break-inside: avoid !important; }
     .skill-group-title { font-size: 9.5pt !important; font-weight: bold !important; margin-bottom: 2pt !important; }
     .skill-tags { display: block !important; }
     .tag { display: inline !important; font-size: 9.5pt !important; background: none !important; border: none !important; padding: 0 !important; }
