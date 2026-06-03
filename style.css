@@ -182,7 +182,7 @@ strong { font-weight: 600; }
 /* Avatar */
 .avatar-ring {
     position: relative;
-    width: 160px; height: 160px;
+    width: 200px; height: 200px;
     margin: 0 auto 28px;
 }
 .avatar-inner {
