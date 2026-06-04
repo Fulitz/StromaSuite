@@ -25,6 +25,7 @@
 
     /* ── TYPED EFFECT ──────────────────────── */
     const phrases = [
+        "Cofundador de STROMA",
         "Analista de Datos",
         "Especialista SSOMA",
         "Automatización Python",
