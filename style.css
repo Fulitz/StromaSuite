@@ -2,11 +2,12 @@
    DESIGN TOKENS
    ========================================================================== */
 :root {
-    --bg:           hsl(222, 47%, 5%);
-    --bg-card:      hsl(222, 40%, 8%);
-    --bg-card-h:    hsl(222, 36%, 11%);
-    --border:       hsl(222, 30%, 16%);
+    --bg:           hsl(222, 47%, 4%);
+    --bg-card:      rgba(13, 20, 38, 0.65);
+    --bg-card-h:    rgba(21, 31, 58, 0.85);
+    --border:       rgba(255, 255, 255, 0.08);
     --border-h:     hsl(215, 80%, 55%);
+    --glass-blur:   blur(16px);
 
     --text-1:  hsl(210, 40%, 96%);
     --text-2:  hsl(215, 20%, 65%);
@@ -33,10 +34,10 @@
 
 .light {
     --bg:        hsl(220, 25%, 96%);
-    --bg-card:   hsl(0, 0%, 100%);
-    --bg-card-h: hsl(220, 30%, 97%);
-    --border:    hsl(220, 20%, 88%);
-    --border-h:  hsl(215, 70%, 50%);
+    --bg-card:   rgba(255, 255, 255, 0.65);
+    --bg-card-h: rgba(240, 243, 248, 0.85);
+    --border:    rgba(0, 0, 0, 0.08);
+    --border-h:  hsl(215, 70%, 48%);
 
     --text-1: hsl(220, 35%, 10%);
     --text-2: hsl(220, 15%, 40%);
@@ -56,6 +57,16 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { scroll-behavior: smooth; }
+
+#bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+}
 
 body {
     background: var(--bg);
@@ -364,6 +375,8 @@ strong { font-weight: 600; }
     display: flex; flex-direction: column; align-items: center; gap: 4px;
     transition: all .25s var(--ease-out);
     position: relative; overflow: hidden;
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
 }
 .stat-card::before {
     content: "";
@@ -439,8 +452,10 @@ strong { font-weight: 600; }
     border-radius: var(--radius-md);
     padding: 22px 24px;
     transition: all .25s var(--ease-out);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
 }
-.job-body:hover { border-color: var(--border-h); box-shadow: 0 8px 32px hsla(215,80%,55%,.1); }
+.job-body:hover { border-color: var(--border-h); box-shadow: 0 12px 40px hsla(215,80%,55%,0.15); }
 
 .job-top {
     display: flex;
@@ -498,8 +513,10 @@ strong { font-weight: 600; }
     border-radius: var(--radius-md);
     padding: 24px;
     transition: all .25s var(--ease-out);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
 }
-.edu-card:hover { border-color: var(--border-h); box-shadow: 0 8px 32px hsla(215,80%,55%,.1); }
+.edu-card:hover { border-color: var(--border-h); box-shadow: 0 12px 40px hsla(215,80%,55%,0.12); }
 
 .edu-logo {
     width: 52px; height: 52px; flex-shrink: 0;
@@ -540,9 +557,11 @@ strong { font-weight: 600; }
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     padding: 20px;
-    transition: border-color .2s;
+    transition: all .25s var(--ease-out);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
 }
-.skill-group:hover { border-color: var(--border-h); }
+.skill-group:hover { border-color: var(--border-h); box-shadow: 0 8px 32px hsla(215,80%,55%,0.08); }
 .skill-group-title {
     font-family: var(--font-head);
     font-size: .9rem; font-weight: 600;
@@ -553,16 +572,35 @@ strong { font-weight: 600; }
 .skill-group-title i { font-size: .85rem; }
 .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .tag {
-    font-size: .78rem; font-weight: 400;
+    font-size: .78rem; font-weight: 500;
     padding: 5px 12px; border-radius: 20px;
-    background: var(--bg);
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--border);
     color: var(--text-2);
-    transition: all .15s;
+    transition: all .2s var(--ease-out);
 }
 .tag:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-dim); }
-.tag--tech { border-color: hsla(185,80%,48%,.3); color: var(--accent); }
-.tag--tech:hover { background: var(--accent-dim); border-color: var(--accent); }
+
+.tag--tech {
+    background: rgba(30, 144, 255, 0.06);
+    border-color: rgba(30, 144, 255, 0.25);
+    color: var(--accent);
+}
+.tag--tech:hover { background: var(--accent-dim); border-color: var(--accent); box-shadow: 0 0 10px rgba(185,80%,48%,0.2); }
+
+.tag--env {
+    background: rgba(46, 204, 113, 0.06);
+    border-color: rgba(46, 204, 113, 0.25);
+    color: var(--green);
+}
+.tag--env:hover { background: var(--green-dim); border-color: var(--green); box-shadow: 0 0 10px rgba(158,65%,48%,0.2); }
+
+.tag--biz {
+    background: rgba(241, 196, 15, 0.06);
+    border-color: rgba(241, 196, 15, 0.25);
+    color: var(--amber);
+}
+.tag--biz:hover { background: var(--amber-dim); border-color: var(--amber); box-shadow: 0 0 10px rgba(38,90%,56%,0.2); }
 
 /* ==========================================================================
    CERTIFICATIONS
@@ -579,11 +617,13 @@ strong { font-weight: 600; }
     border-radius: var(--radius-md);
     padding: 16px;
     transition: all .2s var(--ease-out);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
 }
 .cert-card:hover {
     border-color: var(--border-h);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px hsla(215,80%,55%,.12);
+    box-shadow: 0 10px 30px hsla(215,80%,55%,0.15);
 }
 .cert-icon {
     width: 42px; height: 42px; flex-shrink: 0;

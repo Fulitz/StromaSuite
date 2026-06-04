@@ -9,9 +9,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=2.0">
+    <link rel="stylesheet" href="style.css?v=3.0">
 </head>
 <body>
+    <canvas id="bg-canvas" class="no-print" aria-hidden="true"></canvas>
 
     <!-- FLOATING CONTROLS -->
     <div class="no-print floating-controls">
@@ -105,7 +106,7 @@
             </div>
             <div class="section-body">
                 <p class="profile-text">
-                    Bachiller en <strong>Ingeniería y Gestión Ambiental</strong> por la Universidad Peruana de Ciencias Aplicadas (UPC) y <strong>Cofundador de STROMA</strong>, con un perfil híbrido que integra la <strong>gestión ambiental y SSOMA</strong> con la <strong>automatización de procesos y analítica de datos</strong>. Cuento con experiencia en el acompañamiento e implementación de Sistemas Integrados de Gestión (ISO 9001, ISO 14001, ISO 45001) y en el diseño de tableros de control en Power BI para el monitoreo en tiempo real de KPIs de sostenibilidad y seguridad en el trabajo (SST) bajo la Ley N° 29783.
+                    Bachiller en <strong>Ingeniería y Gestión Ambiental</strong> por la Universidad Peruana de Ciencias Aplicadas (UPC) y <strong>Fundador de STROMA</strong>, con un perfil híbrido que integra la <strong>gestión ambiental y SSOMA</strong> con la <strong>automatización de procesos y analítica de datos</strong>. Cuento con experiencia en el acompañamiento e implementación de Sistemas Integrados de Gestión (ISO 9001, ISO 14001, ISO 45001) y en el diseño de tableros de control en Power BI para el monitoreo en tiempo real de KPIs de sostenibilidad y seguridad en el trabajo (SST) bajo la Ley N° 29783.
                 </p>
                 <p class="profile-text">
                     Destaco por integrar el cumplimiento normativo técnico-legal con la optimización operativa mediante programación en Python y SQL, y por mis habilidades en negociación técnico-comercial, estructuración de propuestas corporativas, liderazgo en inspecciones de seguridad en campo y relacionamiento ante entidades reguladoras (OEFA, OSINERGMIN) y municipales.
@@ -167,18 +168,18 @@
                         <div class="job-top">
                             <div>
                                 <h4 class="job-company">STROMA &middot; Soluciones Tecnológicas y Consultoría SSOMA</h4>
-                                <h5 class="job-role">Cofundador y Consultor de Soluciones Digitales</h5>
+                                <h5 class="job-role">Fundador y Desarrollador Principal</h5>
                             </div>
                             <span class="job-date"><i class="fa-regular fa-calendar no-print"></i> Ene. 2026 &ndash; Presente</span>
                         </div>
                         <ul class="job-achievements">
-                            <li><span class="ach-label">Emprendimiento y Liderazgo:</span> Fundé y lidero el desarrollo técnico-comercial de **STROMA**, un emprendimiento especializado en digitalizar el cumplimiento ambiental y la seguridad y salud en el trabajo (SST) mediante soluciones tecnológicas integradas.</li>
+                            <li><span class="ach-label">Emprendimiento y Tecnología:</span> Concebí, fundé y desarrollé de forma independiente **STROMA**, una solución digital y consultoría especializada en automatizar el cumplimiento ambiental y la seguridad y salud en el trabajo (SST). Diseñé y programé toda la plataforma desde cero mediante *vibe coding*.</li>
                             <li><span class="ach-label">Desarrollo de Soluciones:</span> Diseñé e implementé una **herramienta automatizada de auditoría y diagnóstico de cumplimiento regulatorio** (Checklist SSOMA) que analiza de forma interactiva 23 requisitos críticos y genera planes de acción inmediatos para mitigar riesgos ante OEFA, OSINERGMIN y municipalidades.</li>
                             <li><span class="ach-label">Automatización y BI:</span> Desarrollé tableros e interfaces de control en tiempo real para supervisar indicadores clave de conformidad legal, vigencia de SCTR, capacitación del personal y gestión de residuos sólidos.</li>
                             <li><span class="ach-label">Consultoría Técnica:</span> Brindo asesoramiento especializado en la elaboración, control de documentación obligatoria y homologación de proveedores bajo la Ley N° 29783.</li>
                         </ul>
                         <div class="job-tags no-print">
-                            <span>Emprendimiento</span><span>Consultoría SSOMA</span><span>Ley 29783</span><span>Python</span><span>Power BI</span><span>Auditoría Ambiental</span><span>Gestión de Proyectos</span>
+                            <span class="tag tag--biz">Emprendimiento</span><span class="tag tag--env">Consultoría SSOMA</span><span class="tag tag--env">Ley 29783</span><span class="tag tag--tech">Python</span><span class="tag tag--tech">Power BI</span><span class="tag tag--env">Auditoría Ambiental</span><span class="tag tag--biz">Gestión de Proyectos</span>
                         </div>
                     </div>
                 </article>
@@ -199,7 +200,7 @@
                             <li><span class="ach-label">Continuidad Operativa:</span> Supervisé infraestructura crítica de red bajo estrictos acuerdos de nivel de servicio (SLA), logrando y sosteniendo un <strong>Uptime del 99.9%</strong> mediante respuesta ágil y proactiva ante incidentes.</li>
                         </ul>
                         <div class="job-tags no-print">
-                            <span>Python</span><span>Power BI</span><span>SQL</span><span>Apache NiFi</span><span>GCP</span><span>Telecomunicaciones</span>
+                            <span class="tag tag--tech">Python</span><span class="tag tag--tech">Power BI</span><span class="tag tag--tech">SQL</span><span class="tag tag--tech">Apache NiFi</span><span class="tag tag--tech">GCP</span><span class="tag tag--biz">Telecomunicaciones</span>
                         </div>
                     </div>
                 </article>
@@ -222,7 +223,7 @@
                             <li><span class="ach-label">Gestión Técnico-Comercial:</span> Estructuré propuestas técnico-económicas de servicios SSOMA para clientes estratégicos, captando <strong>más de 15 cuentas corporativas nuevas</strong> e incrementando la tasa de recompra de servicios en un <strong>40%</strong>.</li>
                         </ul>
                         <div class="job-tags no-print">
-                            <span>ISO 9001</span><span>ISO 14001</span><span>ISO 45001</span><span>IPERC</span><span>Ley 29783</span><span>OEFA</span><span>OSINERGMIN</span><span>Ventas B2B</span>
+                            <span class="tag tag--env">ISO 9001</span><span class="tag tag--env">ISO 14001</span><span class="tag tag--env">ISO 45001</span><span class="tag tag--env">IPERC</span><span class="tag tag--env">Ley 29783</span><span class="tag tag--env">OEFA</span><span class="tag tag--env">OSINERGMIN</span><span class="tag tag--biz">Ventas B2B</span>
                         </div>
                     </div>
                 </article>
@@ -242,7 +243,7 @@
                             <li><span class="ach-label">Relacionamiento Internacional:</span> Brindé atención profesionalizada y bilingüe (<strong>Español / Inglés</strong>) a visitantes y delegaciones internacionales, manteniendo altos estándares de calidad de servicio.</li>
                         </ul>
                         <div class="job-tags no-print">
-                            <span>Digitalización</span><span>Atención al Cliente</span><span>Inglés Profesional</span><span>Gestión Documental</span>
+                            <span class="tag tag--tech">Digitalización</span><span class="tag tag--biz">Atención al Cliente</span><span class="tag tag--biz">Inglés Profesional</span><span class="tag tag--tech">Gestión Documental</span>
                         </div>
                     </div>
                 </article>
@@ -286,14 +287,14 @@
                 <div class="skill-group">
                     <h4 class="skill-group-title"><i class="fa-solid fa-leaf no-print"></i> Ingeniería, SSOMA y SIG</h4>
                     <div class="skill-tags">
-                        <span class="tag">Normas ISO 9001 / 14001 / 45001</span>
-                        <span class="tag">Ley N° 29783 (SST)</span>
-                        <span class="tag">Matrices IPERC</span>
-                        <span class="tag">Aspectos e Impactos Ambientales (IAAs)</span>
-                        <span class="tag">Instrumentos Ambientales (IGA)</span>
-                        <span class="tag">Gestión de Residuos</span>
-                        <span class="tag">Energías Renovables</span>
-                        <span class="tag">Control Documental SST</span>
+                        <span class="tag tag--env">Normas ISO 9001 / 14001 / 45001</span>
+                        <span class="tag tag--env">Ley N° 29783 (SST)</span>
+                        <span class="tag tag--env">Matrices IPERC</span>
+                        <span class="tag tag--env">Aspectos e Impactos Ambientales (IAAs)</span>
+                        <span class="tag tag--env">Instrumentos Ambientales (IGA)</span>
+                        <span class="tag tag--env">Gestión de Residuos</span>
+                        <span class="tag tag--env">Energías Renovables</span>
+                        <span class="tag tag--env">Control Documental SST</span>
                     </div>
                 </div>
                 <div class="skill-group">
@@ -312,11 +313,11 @@
                 <div class="skill-group">
                     <h4 class="skill-group-title"><i class="fa-solid fa-handshake no-print"></i> Gestión Comercial y Estrategia</h4>
                     <div class="skill-tags">
-                        <span class="tag">Ventas Corporativas B2B</span>
-                        <span class="tag">Negociación Técnico-Comercial</span>
-                        <span class="tag">Plataformas CRM</span>
-                        <span class="tag">Marketing Digital (Meta Ads &middot; Google Ads)</span>
-                        <span class="tag">Gestión de Redes Sociales</span>
+                        <span class="tag tag--biz">Ventas Corporativas B2B</span>
+                        <span class="tag tag--biz">Negociación Técnico-Comercial</span>
+                        <span class="tag tag--biz">Plataformas CRM</span>
+                        <span class="tag tag--biz">Marketing Digital (Meta Ads &middot; Google Ads)</span>
+                        <span class="tag tag--biz">Gestión de Redes Sociales</span>
                     </div>
                 </div>
                 <div class="skill-group">
@@ -391,6 +392,6 @@
         <p>&copy; 2026 Flavio Esteban Bravo Oyola &nbsp;&middot;&nbsp; Lima, Perú</p>
     </footer>
 
-    <script src="script.js?v=2.0"></script>
+    <script src="script.js?v=3.0"></script>
 </body>
 </html>
