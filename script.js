@@ -25,7 +25,7 @@
 
     /* ── TYPED EFFECT ──────────────────────── */
     const phrases = [
-        "Cofundador de STROMA",
+        "Fundador de STROMA",
         "Analista de Datos",
         "Especialista SSOMA",
         "Automatización Python",
@@ -100,5 +100,126 @@
             if (target) target.scrollIntoView({ behavior: "smooth" });
         });
     });
+
+    /* ── CANVAS PARTICLE SYSTEM ──────────────── */
+    const canvas = document.getElementById("bg-canvas");
+    if (canvas) {
+        const ctx = canvas.getContext("2d");
+        let particles = [];
+        const maxParticles = 65;
+        const connectionDist = 110;
+        const mouse = { x: null, y: null, radius: 150 };
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
+                this.colorType = Math.random() > 0.5 ? "green" : "blue";
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Mouse interaction (gentle attraction)
+                if (mouse.x !== null) {
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < mouse.radius) {
+                        const force = (mouse.radius - dist) / mouse.radius;
+                        this.x += (dx / dist) * force * 0.5;
+                        this.y += (dy / dist) * force * 0.5;
+                    }
+                }
+
+                // Wrap boundaries
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+            }
+
+            draw(isLight) {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                if (isLight) {
+                    ctx.fillStyle = this.colorType === "green" 
+                        ? "rgba(46, 204, 113, 0.35)" 
+                        : "rgba(52, 152, 219, 0.35)";
+                } else {
+                    ctx.fillStyle = this.colorType === "green" 
+                        ? "rgba(43, 201, 142, 0.35)" 
+                        : "rgba(55, 126, 255, 0.35)";
+                }
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < maxParticles; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        window.addEventListener("mousemove", (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+        window.addEventListener("mouseleave", () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const isLight = document.body.classList.contains("light");
+
+            // Update & Draw
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw(isLight);
+            }
+
+            // Draw connection lines
+            ctx.lineWidth = 0.6;
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < connectionDist) {
+                        const alpha = (1 - dist / connectionDist) * 0.12;
+                        if (isLight) {
+                            ctx.strokeStyle = `rgba(0, 0, 0, ${alpha})`;
+                        } else {
+                            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.85})`;
+                        }
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        resizeCanvas();
+        animate();
+    }
 
 })();
