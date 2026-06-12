@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="STROMA — Infraestructura predictiva de cumplimiento SSOMA. Automatizamos la gestión ambiental y de seguridad para empresas en Perú con inteligencia artificial.">
+<title>STROMA — Predictive Compliance Infrastructure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════════════════════════
+   DESIGN SYSTEM — Monochrome White + Accent
+   ════════════════════════════════════════════════════════════ */
+:root {
+  /* STROMA Brand Colors */
+  --bosque: #0F2318;
+  --musgo: #1C3829;
+  --liquen: #2D6A4F;
+  --jade: #6BA882;
+  --menta: #C8E6D4;
+  --papel: #F5F4F0;
+  --arena: #E8E4DB;
+  --salvia: #7A877F;
+  --corteza: #3A4A3F;
+  --blanco: #FFFFFF;
+  --alerta: #C0392B;
+
+  /* System mappings for compatibility */
+  --white: var(--blanco);
+  --off-white: var(--papel);
+  --snow: var(--papel);
+  --silver: var(--arena);
+  --mist: var(--salvia);
+  --steel: var(--salvia);
+  --slate: var(--corteza);
+  --ink: var(--bosque);
+  --accent: var(--jade);
+  --accent-dim: var(--liquen);
+  --accent-glow: rgba(107, 168, 130, 0.15);
+  --accent-border: rgba(107, 168, 130, 0.25);
+  
+  /* Glassmorphism settings */
+  --glass-bg-light: rgba(245, 244, 240, 0.82);
+  --glass-bg-dark: rgba(15, 35, 24, 0.88);
+  --glass-bg: var(--glass-bg-light); /* fallback */
+  --glass-bg-strong: rgba(245, 244, 240, 0.92);
+  --glass-border: rgba(107, 168, 130, 0.15);
+  --glass-blur: blur(25px);
+  
+  --danger: var(--alerta);
+  --danger-bg: rgba(192, 57, 43, 0.06);
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'DM Sans', -apple-system, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: auto; /* Lenis handles smooth scroll */ }
+body {
+  font-family: var(--font-body);
+  background: var(--bosque); /* Dark forest green background for deep canvas look */
+  color: var(--corteza);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--arena); }
+::-webkit-scrollbar-thumb { background: var(--jade); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--menta); }
+
+/* ─── WEBGL CANVAS ─────────────────────────────────── */
+#webgl {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ─── NAV ──────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 72px;
+  background: rgba(15, 35, 24, 0.92); /* Frosted forest green */
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid rgba(107, 168, 130, 0.12);
+  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+nav.scrolled {
+  height: 60px;
+  background: rgba(15, 35, 24, 0.98);
+  box-shadow: 0 1px 40px rgba(0,0,0,0.15);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 14px;
+  text-decoration: none; color: var(--menta);
+}
+.nav-mark {
+  width: 32px; height: 32px;
+  background: var(--jade);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 16px; font-weight: 600;
+  color: var(--bosque);
+  letter-spacing: -0.5px;
+}
+.nav-wordmark { display: flex; flex-direction: column; }
+.nav-wordmark span:first-child {
+  font-weight: 600; font-size: 15px; letter-spacing: 0.14em;
+  color: var(--menta); text-transform: uppercase;
+}
+.nav-wordmark span:last-child {
+  font-size: 8px; letter-spacing: 0.18em; color: var(--jade);
+  text-transform: uppercase; margin-top: 1px;
+}
+.nav-links {
+  display: flex; align-items: center; gap: 36px; list-style: none;
+}
+.nav-links a {
+  font-size: 13px; font-weight: 400; color: rgba(200, 230, 212, 0.65);
+  text-decoration: none; transition: color 0.3s; letter-spacing: 0.02em;
+  position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1.5px; background: var(--jade);
+  transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nav-links a:hover { color: var(--menta); }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  background: var(--jade) !important; color: var(--bosque) !important;
+  padding: 10px 24px; border-radius: var(--radius-sm);
+  font-weight: 500 !important; letter-spacing: 0.02em;
+  transition: all 0.3s !important;
+}
+.nav-cta::after { display: none !important; }
+.nav-cta:hover {
+  background: var(--menta) !important; color: var(--bosque) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(107, 168, 130, 0.3);
+}
+
+/* ─── HERO ─────────────────────────────────────────── */
+#hero {
+  position: relative; z-index: 1;
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 24px;
+  background: transparent; /* transparent to let the floating objects show clearly over deep forest green background */
+}
+.hero-content {
+  max-width: 860px; text-align: center;
+  opacity: 0; transform: translateY(50px);
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(107, 168, 130, 0.1);
+  border: 1px solid rgba(107, 168, 130, 0.22);
+  color: var(--jade);
+  font-size: 10px; font-weight: 500; letter-spacing: 0.18em;
+  text-transform: uppercase; padding: 8px 20px;
+  border-radius: 100px; margin-bottom: 36px;
+}
+.badge-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--jade);
+  animation: pulseDot 2s ease infinite;
+}
+h1.hero-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(42px, 6.5vw, 78px);
+  font-weight: 400; line-height: 1.06;
+  color: var(--white); margin-bottom: 0;
+  letter-spacing: -0.02em;
+}
+h1.hero-h1 em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--jade), var(--menta));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-sub {
+  font-size: 17px; font-weight: 300; line-height: 1.75;
+  color: rgba(200, 230, 212, 0.65); max-width: 520px;
+  margin: 28px auto 44px;
+}
+.hero-actions {
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; flex-wrap: wrap;
+}
+.btn-primary {
+  background: var(--jade); color: var(--bosque);
+  font-family: var(--font-body); font-size: 14px; font-weight: 500;
+  padding: 15px 36px; border-radius: var(--radius-sm);
+  border: none; cursor: pointer; letter-spacing: 0.02em;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-primary:hover {
+  background: var(--menta); color: var(--bosque);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(107, 168, 130, 0.3);
+}
+.btn-ghost {
+  background: transparent; color: var(--menta);
+  font-family: var(--font-body); font-size: 14px; font-weight: 400;
+  padding: 15px 32px; border-radius: var(--radius-sm);
+  border: 1px solid rgba(200, 230, 212, 0.22); cursor: pointer;
+  letter-spacing: 0.02em; transition: all 0.3s; text-decoration: none;
+}
+.btn-ghost:hover {
+  border-color: rgba(200, 230, 212, 0.5); background: rgba(200, 230, 212, 0.05);
+}
+.hero-stats {
+  display: flex; align-items: center; justify-content: center;
+  gap: 48px; margin-top: 72px; padding-top: 44px;
+  border-top: 1px solid rgba(107, 168, 130, 0.15);
+}
+.stat-val {
+  font-family: var(--font-display); font-size: 36px;
+  color: var(--menta); line-height: 1;
+}
+.stat-label {
+  font-size: 11px; color: var(--salvia);
+  letter-spacing: 0.04em; margin-top: 6px;
+}
+.scroll-hint {
+  position: absolute; bottom: 40px; left: 50%;
+  transform: translateX(-50%); z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  opacity: 0;
+}
+.scroll-line {
+  width: 1px; height: 44px;
+  background: linear-gradient(to bottom, var(--jade), transparent);
+  animation: scrollLine 2.5s ease infinite;
+}
+.scroll-text {
+  font-size: 9px; letter-spacing: 0.2em; color: var(--salvia);
+  text-transform: uppercase;
+}
+
+/* ─── TICKER ───────────────────────────────────────── */
+.ticker-wrap {
+  position: relative; z-index: 1;
+  background: var(--musgo);
+  padding: 13px 0; overflow: hidden;
+  border-top: 1px solid rgba(107, 168, 130, 0.15);
+  border-bottom: 1px solid rgba(107, 168, 130, 0.15);
+}
+.ticker-track {
+  display: flex; width: max-content;
+  animation: ticker 35s linear infinite;
+}
+.ticker-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 36px; white-space: nowrap;
+  font-size: 11px; color: var(--jade); letter-spacing: 0.1em;
+  font-weight: 400;
+}
+.ticker-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--jade); opacity: 0.5;
+}
+
+/* ─── SECTIONS COMMON ──────────────────────────────── */
+section { position: relative; z-index: 1; }
+.sec-lbl {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--accent-dim); margin-bottom: 16px;
+}
+.sec-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 400; line-height: 1.12;
+  color: var(--ink); max-width: 680px; letter-spacing: -0.01em;
+}
+.sec-h2 em { font-style: italic; color: var(--accent-dim); }
+
+/* ─── GLASS PANEL ──────────────────────────────────── */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+}
+.glass-panel-strong {
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+}
+
+/* ─── PROBLEMA ─────────────────────────────────────── */
+#problema {
+  padding: 120px 48px;
+  background: var(--glass-bg-light);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-border);
+}
+.prob-inner { max-width: 1100px; margin: 0 auto; }
+.prob-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; margin-top: 60px;
+}
+.prob-left { padding-right: 60px; }
+.prob-right {
+  border-left: 1px solid var(--silver); padding-left: 60px;
+  display: flex; flex-direction: column;
+}
+.pv-card {
+  background: var(--bosque); border-radius: var(--radius-lg);
+  padding: 36px; position: relative; overflow: hidden;
+  min-height: 340px; display: flex; flex-direction: column;
+  justify-content: flex-end;
+  border: 1px solid rgba(107, 168, 130, 0.15);
+}
+.pv-grd {
+  position: absolute; inset: 0; border-radius: var(--radius-lg);
+  background: radial-gradient(ellipse at 30% 25%, rgba(107, 168, 130, 0.18), transparent 55%);
+}
+.pv-bars-wrap { position: relative; z-index: 1; margin-bottom: 20px; }
+.pv-bars { display: flex; align-items: flex-end; gap: 6px; height: 110px; }
+.pv-bar {
+  flex: 1; border-radius: 3px 3px 0 0;
+  background: rgba(255, 255, 255, 0.08); position: relative;
+  height: 20%; transition: height 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.pv-bar.hi { background: linear-gradient(to top, var(--liquen), var(--jade)); }
+.pv-bar-lbl {
+  position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%);
+  font-size: 7px; color: var(--salvia); font-family: var(--font-mono);
+}
+.pv-stat { position: relative; z-index: 1; }
+.pv-stat-val {
+  font-family: var(--font-display); font-size: 38px;
+  color: var(--menta); line-height: 1;
+}
+.pv-stat-desc { font-size: 12px; color: var(--jade); margin-top: 5px; }
+.pain-item { padding: 26px 0; border-bottom: 1px solid var(--silver); }
+.pain-item:last-child { border-bottom: none; padding-bottom: 0; }
+.pain-num {
+  font-family: var(--font-mono); font-size: 10px; color: var(--salvia);
+  letter-spacing: 0.1em; margin-bottom: 6px; transition: color 0.3s;
+}
+.pain-item:hover .pain-num { color: var(--danger); }
+.pain-title { font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
+.pain-desc { font-size: 13px; color: var(--slate); line-height: 1.65; }
+.pain-tag {
+  display: inline-block; margin-top: 8px;
+  font-family: var(--font-mono); font-size: 10px; color: var(--danger);
+  background: var(--danger-bg); padding: 4px 10px;
+  border-radius: 3px; border: 1px solid rgba(231,76,60,0.12);
+}
+
+/* ─── MÓDULOS ──────────────────────────────────────── */
+#modulos {
+  padding: 120px 48px;
+  background: var(--glass-bg-dark);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-border);
+}
+.mod-hdr { text-align: center; margin-bottom: 68px; }
+.mod-hdr .sec-h2 { color: var(--menta) !important; margin: 0 auto; }
+.mod-hdr .sec-h2 em { color: var(--jade) !important; }
+.mod-hdr p { font-size: 14px; color: rgba(200, 230, 212, 0.5); margin-top: 12px; }
+.mod-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 16px; max-width: 1100px; margin: 0 auto;
+}
+.mod-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(107, 168, 130, 0.12);
+  border-radius: var(--radius-md); padding: 32px;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer; position: relative; overflow: hidden;
+}
+.mod-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; background: linear-gradient(90deg, var(--liquen), var(--jade));
+  transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+}
+.mod-card:hover {
+  background: rgba(45, 106, 79, 0.08);
+  border-color: rgba(107, 168, 130, 0.35);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+.mod-card:hover::before { transform: scaleX(1); }
+.mod-card.feat { grid-column: span 2; }
+.mod-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: rgba(107, 168, 130, 0.07);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 18px; font-size: 20px;
+  border: 1px solid rgba(107, 168, 130, 0.15);
+}
+.mod-tag {
+  display: inline-block; font-size: 9px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent-dim); background: var(--accent-glow);
+  padding: 4px 10px; border-radius: 4px; margin-bottom: 10px;
+}
+.mod-name {
+  font-size: 18px; font-weight: 600; color: var(--ink); margin-bottom: 10px;
+}
+.mod-desc { font-size: 13px; color: var(--slate); line-height: 1.7; }
+.mod-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--accent-dim); margin-top: 18px;
+  font-weight: 500; opacity: 0; transform: translateY(5px);
+  transition: all 0.3s;
+}
+.mod-card:hover .mod-cta { opacity: 1; transform: translateY(0); }
+.mod-cta-arr { transition: transform 0.25s; }
+.mod-card:hover .mod-cta-arr { transform: translateX(4px); }
+
+/* ─── ROI ──────────────────────────────────────────── */
+#roi {
+  padding: 120px 48px;
+  background: var(--glass-bg-light);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-border);
+}
+.roi-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: start;
+}
+.roi-form { margin-top: 36px; }
+.roi-lbl {
+  display: block; font-size: 10px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--slate); margin-bottom: 7px;
+}
+.roi-field { margin-bottom: 18px; }
+.roi-input, .roi-select {
+  width: 100%; padding: 13px 16px;
+  background: var(--white);
+  border: 1px solid var(--silver); border-radius: var(--radius-sm);
+  font-family: var(--font-body); font-size: 14px; color: var(--ink);
+  outline: none; transition: border-color 0.3s;
+  -webkit-appearance: none;
+}
+.roi-input:focus, .roi-select:focus { border-color: var(--accent); }
+.roi-select {
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%236BA882' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center;
+  background-color: var(--white); cursor: pointer;
+}
+.range-wrap { display: flex; align-items: center; gap: 14px; }
+.roi-range {
+  flex: 1; -webkit-appearance: none; height: 3px;
+  background: var(--silver); border-radius: 2px; outline: none; cursor: pointer;
+}
+.roi-range::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 20px; height: 20px;
+  border-radius: 50%; background: var(--ink);
+  border: 3px solid var(--accent); cursor: pointer;
+  transition: transform 0.2s;
+}
+.roi-range::-webkit-slider-thumb:hover { transform: scale(1.15); }
+.range-val {
+  font-family: var(--font-mono); font-size: 12px;
+  color: var(--ink); min-width: 44px; text-align: right;
+}
+.roi-right { position: sticky; top: 96px; }
+.roi-card {
+  background: var(--bosque); border-radius: var(--radius-lg);
+  padding: 40px; position: relative; overflow: hidden;
+  border: 1px solid rgba(107, 168, 130, 0.15);
+}
+.roi-card-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 80% 15%, rgba(107, 168, 130, 0.12), transparent 55%);
+}
+.roi-res-lbl {
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 6px; position: relative; z-index: 1;
+}
+.roi-res-val {
+  font-family: var(--font-display); font-size: 52px;
+  color: var(--menta); line-height: 1; position: relative; z-index: 1;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.roi-res-sub {
+  font-size: 12px; color: var(--steel); margin-top: 6px;
+  position: relative; z-index: 1;
+}
+.roi-div {
+  height: 1px; background: rgba(107,168,130,0.14);
+  margin: 28px 0; position: relative; z-index: 1;
+}
+.roi-metrics {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 20px; position: relative; z-index: 1;
+}
+.roi-m-val {
+  font-family: var(--font-display); font-size: 28px;
+  color: var(--accent); line-height: 1; transition: all 0.4s;
+}
+.roi-m-lbl { font-size: 11px; color: var(--steel); margin-top: 4px; }
+.roi-bar-wrap { margin-top: 24px; position: relative; z-index: 1; }
+.roi-bar-labels { display: flex; justify-content: space-between; margin-bottom: 6px; }
+.roi-bar-labels span { font-size: 10px; color: var(--steel); }
+.roi-bar-track { height: 4px; background: rgba(107,168,130,0.14); border-radius: 2px; }
+.roi-bar-fill {
+  height: 100%; border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent-dim), var(--accent));
+  transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.roi-disc {
+  font-size: 10px; color: var(--steel); margin-top: 20px;
+  line-height: 1.55; position: relative; z-index: 1;
+}
+
+/* ─── NORMATIVAS ───────────────────────────────────── */
+#norm {
+  padding: 60px 48px;
+  background: var(--glass-bg-light);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-border);
+}
+.norm-inner {
+  max-width: 1100px; margin: 0 auto; text-align: center;
+  background: var(--glass-bg);
+  backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+  border: 1px solid var(--glass-border); border-radius: var(--radius-lg);
+  padding: 48px;
+}
+.norm-lbl {
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--steel); margin-bottom: 28px;
+}
+.norm-logos {
+  display: flex; align-items: center; justify-content: center;
+  gap: 40px; flex-wrap: wrap;
+}
+.norm-item {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 8px; opacity: 0.45; transition: opacity 0.3s; cursor: default;
+}
+.norm-item:hover { opacity: 1; }
+.norm-icon {
+  width: 44px; height: 44px; background: var(--snow);
+  border-radius: 10px; display: flex; align-items: center;
+  justify-content: center; font-size: 18px;
+  border: 1px solid var(--silver);
+}
+.norm-name {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+  color: var(--ink); text-transform: uppercase;
+}
+
+/* ─── PERSONAS ─────────────────────────────────────── */
+#personas {
+  padding: 120px 48px;
+  background: var(--glass-bg-dark);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-border);
+}
+.pers-inner { max-width: 1100px; margin: 0 auto; }
+.pers-hdr { margin-bottom: 60px; }
+.pers-hdr .sec-h2 { color: var(--menta) !important; }
+.pers-hdr .sec-h2 em { color: var(--jade) !important; }
+.pers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.pers-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(107, 168, 130, 0.12);
+  border-radius: var(--radius-md); padding: 32px;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.pers-card:hover {
+  background: rgba(45, 106, 79, 0.07);
+  border-color: rgba(107, 168, 130, 0.24);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+}
+.pers-av {
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600; margin-bottom: 18px;
+  background: rgba(107, 168, 130, 0.11); color: var(--jade);
+  border: 2px solid rgba(107, 168, 130, 0.25);
+}
+.pers-role {
+  font-size: 9px; font-weight: 600; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--jade); margin-bottom: 5px;
+}
+.pers-name {
+  font-size: 18px; font-weight: 600; color: var(--menta); margin-bottom: 18px;
+}
+.pers-pain {
+  font-size: 12px; color: rgba(200, 100, 90, 0.9);
+  background: rgba(192, 57, 43, 0.08);
+  border-left: 2px solid rgba(192, 57, 43, 0.35);
+  padding: 10px 13px; border-radius: 0 6px 6px 0;
+  margin-bottom: 10px; line-height: 1.6;
+}
+.pers-value {
+  font-size: 12px; color: var(--jade);
+  background: rgba(107, 168, 130, 0.07);
+  border-left: 2px solid rgba(107, 168, 130, 0.28);
+  padding: 10px 13px; border-radius: 0 6px 6px 0; line-height: 1.6;
+}
+
+/* ─── PLANES ───────────────────────────────────────── */
+#planes {
+  padding: 120px 48px;
+  background: var(--glass-bg-light);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-border);
+}
+.planes-inner { max-width: 1000px; margin: 0 auto; }
+.planes-hdr { text-align: center; margin-bottom: 60px; }
+.planes-hdr p { font-size: 14px; color: var(--slate); margin-top: 12px; }
+.toggle-wrap { text-align: center; margin-bottom: 44px; }
+.toggle {
+  display: inline-flex; background: var(--snow);
+  border-radius: var(--radius-sm); padding: 4px;
+  border: 1px solid var(--silver);
+}
+.tog-btn {
+  padding: 9px 22px; border-radius: 6px; border: none; cursor: pointer;
+  font-family: var(--font-body); font-size: 12px; font-weight: 500;
+  background: transparent; color: var(--slate); transition: all 0.3s;
+}
+.tog-btn.on { background: var(--ink); color: var(--white); }
+.planes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.plan-card {
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--silver);
+  border-radius: var(--radius-md); padding: 32px;
+  position: relative; transition: all 0.35s;
+}
+.plan-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 56px rgba(0,0,0,0.07);
+}
+.plan-card.hl {
+  background: var(--bosque); border-color: rgba(107,168,130,0.25);
+}
+.plan-badge {
+  position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
+  background: var(--accent); color: var(--bosque);
+  font-size: 9px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 5px 16px;
+  border-radius: 100px; white-space: nowrap;
+}
+.plan-ph {
+  font-size: 9px; font-weight: 600; letter-spacing: 0.16em;
+  text-transform: uppercase; margin-bottom: 7px;
+}
+.plan-card:not(.hl) .plan-ph { color: var(--accent-dim); }
+.plan-card.hl .plan-ph { color: var(--accent); }
+.plan-name { font-size: 20px; font-weight: 600; margin-bottom: 5px; }
+.plan-card:not(.hl) .plan-name { color: var(--ink); }
+.plan-card.hl .plan-name { color: var(--white); }
+.plan-tgt { font-size: 12px; margin-bottom: 22px; }
+.plan-card:not(.hl) .plan-tgt { color: var(--slate); }
+.plan-card.hl .plan-tgt { color: var(--steel); }
+.plan-price {
+  font-family: var(--font-display); font-size: 36px;
+  line-height: 1; margin-bottom: 3px;
+}
+.plan-card:not(.hl) .plan-price { color: var(--ink); }
+.plan-card.hl .plan-price { color: var(--white); }
+.plan-period { font-size: 12px; margin-bottom: 24px; }
+.plan-card:not(.hl) .plan-period { color: var(--slate); }
+.plan-card.hl .plan-period { color: var(--accent); }
+.plan-sep { height: 1px; margin-bottom: 22px; }
+.plan-card:not(.hl) .plan-sep { background: var(--silver); }
+.plan-card.hl .plan-sep { background: rgba(255,255,255,0.08); }
+.plan-feats {
+  list-style: none; display: flex; flex-direction: column;
+  gap: 10px; margin-bottom: 28px;
+}
+.plan-feat {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; line-height: 1.5;
+}
+.plan-card:not(.hl) .plan-feat { color: var(--slate); }
+.plan-card.hl .plan-feat { color: rgba(255,255,255,0.7); }
+.plan-chk {
+  width: 16px; height: 16px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px; font-size: 8px;
+}
+.plan-card:not(.hl) .plan-chk { background: rgba(45, 106, 79, 0.11); color: var(--liquen); }
+.plan-card.hl .plan-chk { background: rgba(107,168,130,0.15); color: var(--accent); }
+.plan-btn {
+  width: 100%; padding: 14px; border-radius: var(--radius-sm);
+  font-family: var(--font-body); font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: all 0.3s; border: none; letter-spacing: 0.02em;
+}
+.plan-card:not(.hl) .plan-btn { background: var(--bosque); color: var(--white); }
+.plan-card:not(.hl) .plan-btn:hover { background: var(--accent); color: var(--bosque); }
+.plan-card.hl .plan-btn { background: var(--accent); color: var(--bosque); }
+.plan-card.hl .plan-btn:hover {
+  background: var(--white); box-shadow: 0 8px 24px var(--accent-glow);
+}
+
+/* ─── CONTACTO ─────────────────────────────────────── */
+#contacto {
+  padding: 120px 48px;
+  background: var(--glass-bg-light);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-border);
+}
+.ctct-inner {
+  max-width: 720px; margin: 0 auto; text-align: center;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl); padding: 64px 56px;
+}
+.ctct-inner .sec-h2 { margin: 0 auto 14px; }
+.ctct-inner > p {
+  font-size: 14px; color: var(--slate); margin-bottom: 44px; line-height: 1.7;
+}
+.c-form { display: flex; flex-direction: column; gap: 14px; text-align: left; }
+.c-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.c-field { display: flex; flex-direction: column; gap: 6px; }
+.c-lbl {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--slate);
+}
+.c-input {
+  padding: 14px 16px; background: var(--white);
+  border: 1px solid var(--silver); border-radius: var(--radius-sm);
+  font-family: var(--font-body); font-size: 14px; color: var(--ink);
+  outline: none; transition: border-color 0.3s;
+}
+.c-input::placeholder { color: var(--mist); }
+.c-input:focus { border-color: var(--accent); }
+.c-sel {
+  padding: 14px 16px; background: var(--white);
+  border: 1px solid var(--silver); border-radius: var(--radius-sm);
+  font-family: var(--font-body); font-size: 14px; color: var(--ink);
+  outline: none; cursor: pointer; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%236BA882' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center;
+  background-color: var(--white); transition: border-color 0.3s;
+}
+.c-sel:focus { border-color: var(--accent); }
+.c-area {
+  padding: 14px 16px; background: var(--white);
+  border: 1px solid var(--silver); border-radius: var(--radius-sm);
+  font-family: var(--font-body); font-size: 14px; color: var(--ink);
+  outline: none; resize: vertical; min-height: 100px;
+  transition: border-color 0.3s;
+}
+.c-area::placeholder { color: var(--mist); }
+.c-area:focus { border-color: var(--accent); }
+.c-submit {
+  padding: 16px 36px; background: var(--bosque); color: var(--white);
+  border: none; border-radius: var(--radius-sm);
+  font-family: var(--font-body); font-size: 14px; font-weight: 500;
+  cursor: pointer; letter-spacing: 0.02em;
+  transition: all 0.35s; width: 100%;
+}
+.c-submit:hover {
+  background: var(--accent); color: var(--bosque);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px var(--accent-glow);
+}
+.c-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.c-ok {
+  display: none; text-align: center; padding: 40px;
+  background: var(--accent-glow);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-md);
+}
+.c-ok-ico { font-size: 40px; margin-bottom: 16px; }
+.c-ok h3 {
+  font-family: var(--font-display); font-size: 28px;
+  color: var(--ink); margin-bottom: 8px;
+}
+.c-ok p { font-size: 13px; color: var(--slate); }
+
+/* ─── FOOTER ───────────────────────────────────────── */
+footer {
+  position: relative; z-index: 1;
+  background: var(--glass-bg-light);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--glass-border);
+  padding: 36px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px;
+}
+.ft-copy { font-size: 11px; color: var(--steel); }
+.ft-copy span { color: var(--ink); font-weight: 500; }
+.ft-links { display: flex; gap: 28px; }
+.ft-links a {
+  font-size: 11px; color: var(--steel); text-decoration: none;
+  transition: color 0.3s;
+}
+.ft-links a:hover { color: var(--accent); }
+
+/* ─── ANIMATIONS ───────────────────────────────────── */
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+@keyframes scrollLine {
+  0% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+  50% { opacity: 1; transform: scaleY(1); }
+  100% { opacity: 0; transform: scaleY(1); transform-origin: bottom; }
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.reveal {
+  opacity: 0; transform: translateY(35px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.v { opacity: 1; transform: translateY(0); }
+.d1 { transition-delay: 0.1s; }
+.d2 { transition-delay: 0.2s; }
+.d3 { transition-delay: 0.3s; }
+.d4 { transition-delay: 0.4s; }
+
+/* ─── RESPONSIVE ───────────────────────────────────── */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; height: 64px; }
+  .nav-links { display: none; }
+  #hero { padding: 0 20px; min-height: 90vh; }
+  h1.hero-h1 { font-size: clamp(32px, 8vw, 48px); }
+  .hero-sub { font-size: 15px; }
+  .hero-stats { gap: 20px; flex-wrap: wrap; }
+  .stat-val { font-size: 28px; }
+  section { padding-left: 20px !important; padding-right: 20px !important; }
+  .prob-grid, .roi-inner { grid-template-columns: 1fr; }
+  .prob-left { padding-right: 0; margin-bottom: 40px; }
+  .prob-right { border-left: none; padding-left: 0; border-top: 1px solid var(--silver); padding-top: 28px; }
+  .mod-grid, .pers-grid, .planes-grid { grid-template-columns: 1fr; }
+  .mod-card.feat { grid-column: span 1; }
+  .c-row { grid-template-columns: 1fr; }
+  .ctct-inner { padding: 40px 24px; }
+  .roi-res-val { font-size: 38px; }
+  .norm-inner { padding: 32px 20px; }
+  footer { padding: 24px 20px; }
+}
+
+/* ─── BACKDROP FILTER FALLBACK ─────────────────────── */
+@supports not (backdrop-filter: blur(1px)) {
+  .glass-panel, .glass-panel-strong,
+  nav, .ticker-wrap, .mod-card, .pers-card,
+  .plan-card, .ctct-inner, .norm-inner, footer {
+    background: rgba(255, 255, 255, 0.95) !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ WEBGL CANVAS ═══════════════════════════════════ -->
+<canvas id="webgl"></canvas>
+
+<!-- ═══ NAV ═════════════════════════════════════════════ -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <div class="nav-mark">S</div>
+    <div class="nav-wordmark">
+      <span>STROMA</span>
+      <span>Predictive Compliance</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#problema">El Problema</a></li>
+    <li><a href="#modulos">Módulos</a></li>
+    <li><a href="#roi">Calculadora ROI</a></li>
+    <li><a href="#planes">Planes</a></li>
+    <li><a href="#contacto" class="nav-cta">Solicitar Demo →</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ HERO ════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-badge"><div class="badge-dot"></div>Predictive Compliance Infrastructure · Perú</div>
+    <h1 class="hero-h1">El tejido digital que<br>mantiene tu operación<br><em>viva y en regla.</em></h1>
+    <p class="hero-sub">Automatizamos el cumplimiento SSOMA para que tú protejas lo que importa. Gestión técnica integral con IA — desde matrices IPERC hasta certificados de capacitación.</p>
+    <div class="hero-actions">
+      <a href="#contacto" class="btn-primary">Solicitar demo gratuita →</a>
+      <a href="#roi" class="btn-ghost">Calcular mi ROI</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-val">90%</div><div class="stat-label">Reducción carga admin.</div></div>
+      <div class="stat-item"><div class="stat-val">S/. 0</div><div class="stat-label">Multas SUNAFIL proy.</div></div>
+      <div class="stat-item"><div class="stat-val">7 mo.</div><div class="stat-label">Payback promedio</div></div>
+      <div class="stat-item"><div class="stat-val">IA</div><div class="stat-label">Matrices IPERC auto.</div></div>
+    </div>
+  </div>
+  <div class="scroll-hint"><div class="scroll-text">Descubrir</div><div class="scroll-line"></div></div>
+</section>
+
+<!-- ═══ TICKER ══════════════════════════════════════════ -->
+<div class="ticker-wrap"><div class="ticker-track" id="tkt"></div></div>
+
+<!-- ═══ PROBLEMA ════════════════════════════════════════ -->
+<section id="problema">
+  <div class="prob-inner">
+    <div class="reveal">
+      <div class="sec-lbl">El diagnóstico</div>
+      <h2 class="sec-h2">El cumplimiento SSOMA no debería<br><em>destruir tu rentabilidad.</em></h2>
+    </div>
+    <div class="prob-grid">
+      <div class="prob-left reveal d1">
+        <div class="pv-card">
+          <div class="pv-grd"></div>
+          <div class="pv-bars-wrap">
+            <div class="pv-bars" id="pvb">
+              <div class="pv-bar" data-h="28"><span class="pv-bar-lbl">Ene</span></div>
+              <div class="pv-bar" data-h="42"><span class="pv-bar-lbl">Feb</span></div>
+              <div class="pv-bar" data-h="36"><span class="pv-bar-lbl">Mar</span></div>
+              <div class="pv-bar hi" data-h="78"><span class="pv-bar-lbl">Abr</span></div>
+              <div class="pv-bar hi" data-h="89"><span class="pv-bar-lbl">May</span></div>
+              <div class="pv-bar hi" data-h="94"><span class="pv-bar-lbl">Jun</span></div>
+              <div class="pv-bar hi" data-h="98"><span class="pv-bar-lbl">Jul</span></div>
+            </div>
+          </div>
+          <div class="pv-stat">
+            <div class="pv-stat-val">−87%</div>
+            <div class="pv-stat-desc">reducción en horas-hombre administrativas tras implementar STROMA</div>
+          </div>
+        </div>
+      </div>
+      <div class="prob-right reveal d2">
+        <div class="pain-item">
+          <div class="pain-num">01 / BUROCRACIA</div>
+          <div class="pain-title">Miles de horas-hombre en papeleo</div>
+          <div class="pain-desc">El cumplimiento de la Ley N° 29783 y los IGA ante SUNAFIL, OEFA y MINAM exige documentación masiva que se gestiona a mano en Excel.</div>
+          <span class="pain-tag">~2,400 hrs/año en documentación manual</span>
+        </div>
+        <div class="pain-item">
+          <div class="pain-num">02 / RIESGO FINANCIERO</div>
+          <div class="pain-title">Multas que amenazan la operación</div>
+          <div class="pain-desc">Las infracciones graves de seguridad y ambientales se miden en UITs. Una sola inspección adversa puede costar cientos de miles de soles.</div>
+          <span class="pain-tag">Hasta S/. 450,000 por infracción grave</span>
+        </div>
+        <div class="pain-item">
+          <div class="pain-num">03 / GESTIÓN REACTIVA</div>
+          <div class="pain-title">El 90% solo reacciona, no previene</div>
+          <div class="pain-desc">Las matrices de riesgo en hojas estáticas se actualizan solo después de un accidente o inspección. El daño ya está hecho.</div>
+          <span class="pain-tag">Punto ciego operativo total</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MÓDULOS ═════════════════════════════════════════ -->
+<section id="modulos">
+  <div class="mod-hdr reveal">
+    <div class="sec-lbl">La solución</div>
+    <h2 class="sec-h2" style="margin:0 auto">Suite de <em>módulos inteligentes</em></h2>
+    <p>Cada módulo resuelve un dolor específico. Todos comparten datos en tiempo real.</p>
+  </div>
+  <div class="mod-grid">
+    <div class="mod-card feat reveal d1">
+      <div class="mod-tag">IA · IPERC &amp; MIA</div>
+      <div class="mod-name">IPERC &amp; Gestión de MIA con IA</div>
+      <div class="mod-desc">Identificación de peligros y aspectos ambientales con evaluación legal por R.M. 050 y Conesa. Genera automáticamente el 80% de tus matrices de riesgo según puesto y sector industrial. Renderiza mapas de calor 5×5 dinámicos e interactivos. Exporta informes y matrices en PDF/Excel de alta calidad corporativa.</div>
+      <a href="#contacto" class="mod-cta">Abrir módulo <span class="mod-cta-arr">→</span></a>
+    </div>
+    <div class="mod-card reveal d2">
+      <div class="mod-icon">📊</div>
+      <div class="mod-tag">NLP · CAPA</div>
+      <div class="mod-name">Dashboard CAPA</div>
+      <div class="mod-desc">Base de incidentes en campo y desvíos ambientales. NLP de severidad, tasa de remediación y cuadrante de riesgos en tiempo real.</div>
+      <a href="#contacto" class="mod-cta">Ver módulo <span class="mod-cta-arr">→</span></a>
+    </div>
+    <div class="mod-card reveal d3">
+      <div class="mod-icon">🧮</div>
+      <div class="mod-tag">W.T. FINE · ROI</div>
+      <div class="mod-name">Calculadoras de Riesgo</div>
+      <div class="mod-desc">Evaluación cuantitativa R.M. 050 y estimador W.T. Fine. Traduce cada riesgo a soles: ROI exacto y payback en meses para el CFO.</div>
+      <a href="#contacto" class="mod-cta">Ver módulo <span class="mod-cta-arr">→</span></a>
+    </div>
+    <div class="mod-card reveal d1">
+      <div class="mod-icon">🌿</div>
+      <div class="mod-tag">ALCANCE 3 · MINAM</div>
+      <div class="mod-name">Gestión Ambiental</div>
+      <div class="mod-desc">Control de residuos, manifiestos D.L. 1278, huella de carbono Alcance 3 y comparación contra ECAs/LMPs bajo directrices MINAM.</div>
+      <a href="#contacto" class="mod-cta">Ver módulo <span class="mod-cta-arr">→</span></a>
+    </div>
+    <div class="mod-card reveal d2">
+      <div class="mod-icon">🎯</div>
+      <div class="mod-tag">IA · CHARLAS</div>
+      <div class="mod-name">Charlas de 5 Minutos</div>
+      <div class="mod-desc">Diseño automático con IA de guiones y compromisos grupales de seguridad por sectores para charlas pre-jornada. Registro digital con firma.</div>
+      <a href="#contacto" class="mod-cta">Ver módulo <span class="mod-cta-arr">→</span></a>
+    </div>
+    <div class="mod-card reveal d3">
+      <div class="mod-icon">🎓</div>
+      <div class="mod-tag">CERTIFICACIÓN · APSSOMA</div>
+      <div class="mod-name">Academia SSOMA</div>
+      <div class="mod-desc">Capacitación interactiva basada en manual APSSOMA. Evalúa y certifica competencias de trabajadores. Genera certificados PDF corporativos al instante.</div>
+      <a href="#contacto" class="mod-cta">Ver módulo <span class="mod-cta-arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ROI ═════════════════════════════════════════════ -->
+<section id="roi">
+  <div class="roi-inner">
+    <div class="roi-left">
+      <div class="reveal">
+        <div class="sec-lbl">Calculadora de valor</div>
+        <h2 class="sec-h2">¿Cuánto estás<br><em>perdiendo hoy?</em></h2>
+        <p style="font-size:14px;color:var(--slate);margin-top:14px;line-height:1.7">El simulador William T. Fine calcula en tiempo real el ahorro proyectado y el retorno de inversión exacto para tu empresa.</p>
+      </div>
+      <div class="roi-form reveal d1">
+        <div class="roi-field">
+          <label class="roi-lbl">Sector industrial</label>
+          <select class="roi-select" id="rSec" onchange="calc()">
+            <option value="1.0">Logístico / Transporte</option>
+            <option value="1.6">Minero / Extractivo</option>
+            <option value="1.3">Construcción / Infraestructura</option>
+            <option value="1.1">Manufactura / Industrial</option>
+            <option value="0.9">Contratista / Servicios</option>
+          </select>
+        </div>
+        <div class="roi-field">
+          <label class="roi-lbl">Trabajadores: <span id="wc">80</span></label>
+          <div class="range-wrap">
+            <input type="range" class="roi-range" id="rW" min="10" max="500" value="80" oninput="document.getElementById('wc').textContent=this.value;calc()">
+            <span class="range-val" id="wv">80</span>
+          </div>
+        </div>
+        <div class="roi-field">
+          <label class="roi-lbl">Inspecciones SUNAFIL/año: <span id="ic">2</span></label>
+          <div class="range-wrap">
+            <input type="range" class="roi-range" id="rI" min="1" max="12" value="2" oninput="document.getElementById('ic').textContent=this.value;calc()">
+            <span class="range-val" id="iv">2</span>
+          </div>
+        </div>
+        <div class="roi-field">
+          <label class="roi-lbl">Horas/semana en papeleo: <span id="hc">15</span></label>
+          <div class="range-wrap">
+            <input type="range" class="roi-range" id="rH" min="2" max="60" value="15" oninput="document.getElementById('hc').textContent=this.value;calc()">
+            <span class="range-val" id="hv">15</span>
+          </div>
+        </div>
+        <div class="roi-field">
+          <label class="roi-lbl">Plan STROMA</label>
+          <select class="roi-select" id="rPlan" onchange="calc()">
+            <option value="99">Individual S/. 99/mes</option>
+            <option value="299" selected>Pro Multi-Tenant S/. 299/mes</option>
+            <option value="1500">Marca Blanca S/. 1,500/mes</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="roi-right reveal d2">
+      <div class="roi-card">
+        <div class="roi-card-bg"></div>
+        <div class="roi-res-lbl">Ahorro anual proyectado</div>
+        <div class="roi-res-val" id="rAh">S/. 126,400</div>
+        <div class="roi-res-sub">vs. gestión manual actual · metodología W.T. Fine</div>
+        <div class="roi-div"></div>
+        <div class="roi-metrics">
+          <div><div class="roi-m-val" id="rPb">7 meses</div><div class="roi-m-lbl">Periodo de recupero</div></div>
+          <div><div class="roi-m-val" id="rMu">S/. 0</div><div class="roi-m-lbl">Multas evitadas</div></div>
+          <div><div class="roi-m-val" id="rHa">780 hrs</div><div class="roi-m-lbl">Horas liberadas/año</div></div>
+          <div><div class="roi-m-val" id="rRO">342%</div><div class="roi-m-lbl">ROI primer año</div></div>
+        </div>
+        <div class="roi-bar-wrap">
+          <div class="roi-bar-labels"><span>Inversión STROMA</span><span>Ahorro generado</span></div>
+          <div class="roi-bar-track"><div class="roi-bar-fill" id="rBar" style="width:77%"></div></div>
+        </div>
+        <div class="roi-disc">* Estimación basada en metodología William T. Fine. Considera costo de accidentabilidad, horas-hombre y riesgo de multas SUNAFIL según sector. Valores referenciales.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NORMATIVAS ══════════════════════════════════════ -->
+<section id="norm">
+  <div class="norm-inner">
+    <div class="norm-lbl">Marcos normativos integrados</div>
+    <div class="norm-logos">
+      <div class="norm-item"><div class="norm-icon">⚖️</div><div class="norm-name">SUNAFIL</div></div>
+      <div class="norm-item"><div class="norm-icon">🌍</div><div class="norm-name">OEFA</div></div>
+      <div class="norm-item"><div class="norm-icon">⛽</div><div class="norm-name">OSINERGMIN</div></div>
+      <div class="norm-item"><div class="norm-icon">🌿</div><div class="norm-name">MINAM</div></div>
+      <div class="norm-item"><div class="norm-icon">📋</div><div class="norm-name">Ley 29783</div></div>
+      <div class="norm-item"><div class="norm-icon">📄</div><div class="norm-name">R.M. 050</div></div>
+      <div class="norm-item"><div class="norm-icon">♻️</div><div class="norm-name">D.L. 1278</div></div>
+      <div class="norm-item"><div class="norm-icon">🏅</div><div class="norm-name">ISO 45001</div></div>
+      <div class="norm-item"><div class="norm-icon">🌱</div><div class="norm-name">Huella Perú</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PERSONAS ════════════════════════════════════════ -->
+<section id="personas">
+  <div class="pers-inner">
+    <div class="pers-hdr reveal">
+      <div class="sec-lbl">Para quién</div>
+      <h2 class="sec-h2">Tres perfiles, <em>un solo sistema</em></h2>
+    </div>
+    <div class="pers-grid">
+      <div class="pers-card reveal d1">
+        <div class="pers-av">GO</div>
+        <div class="pers-role">Comprador técnico</div>
+        <div class="pers-name">Gerente de Operaciones</div>
+        <div class="pers-pain">Horas perdidas en papeleo y homologaciones que retrasan el inicio de proyectos.</div>
+        <div class="pers-value">Automatización del 90% del trabajo administrativo SSOMA desde el día uno.</div>
+      </div>
+      <div class="pers-card reveal d2">
+        <div class="pers-av">CF</div>
+        <div class="pers-role">Comprador económico</div>
+        <div class="pers-name">CFO / Gerente Finanzas</div>
+        <div class="pers-pain">No entiende de riesgos técnicos. Solo entiende el balance y las multas que aparecen en él.</div>
+        <div class="pers-value">ROI exacto calculado con W.T. Fine: cuántos soles ahorras en tu balance anual.</div>
+      </div>
+      <div class="pers-card reveal d3">
+        <div class="pers-av">CS</div>
+        <div class="pers-role">Usuario a escala</div>
+        <div class="pers-name">Consultor SSOMA</div>
+        <div class="pers-pain">Quiere digitalizarse y gestionar múltiples clientes sin saber programar.</div>
+        <div class="pers-value">Plataforma multi-tenant con marca blanca: gestiona todos tus clientes en minutos.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PLANES ══════════════════════════════════════════ -->
+<section id="planes">
+  <div class="planes-inner">
+    <div class="planes-hdr reveal">
+      <div class="sec-lbl">Modelo comercial</div>
+      <h2 class="sec-h2" style="margin:0 auto">Elige tu plan</h2>
+      <p>Sin contratos anuales. Sin costos ocultos. Cancela cuando quieras.</p>
+    </div>
+    <div class="toggle-wrap">
+      <div class="toggle">
+        <button class="tog-btn on" onclick="setTog(this,'mensual')">Mensual</button>
+        <button class="tog-btn" onclick="setTog(this,'anual')">Anual — 2 meses gratis</button>
+      </div>
+    </div>
+    <div class="planes-grid">
+      <div class="plan-card reveal d1">
+        <div class="plan-ph">Individual</div>
+        <div class="plan-name">SaaS Básico</div>
+        <div class="plan-tgt">Para coordinadores SSOMA</div>
+        <div class="plan-price" data-mensual="S/. 99" data-anual="S/. 79">S/. 99</div>
+        <div class="plan-period">/ mes · 1 empresa</div>
+        <div class="plan-sep"></div>
+        <ul class="plan-feats">
+          <li class="plan-feat"><span class="plan-chk">✓</span><span>Módulos IPERC + Field Verified</span></li>
+          <li class="plan-feat"><span class="plan-chk">✓</span><span>Exportación PDF ilimitada</span></li>
+          <li class="plan-feat"><span class="plan-chk">✓</span><span>Actualizaciones normativas incluidas</span></li>
+          <li class="plan-feat"><span class="plan-chk">✓</span><span>Hasta 50 trabajadores</span></li>
+          <li class="plan-feat"><span class="plan-chk">✓</span><span>Soporte por correo</span></li>
+        </ul>
+        <button class="plan-btn" onclick="goTo('#contacto')">Empezar →</button>
+      </div>
+      <div class="plan-card hl reveal d2">
+        <div class="plan-badge">Más popular</div>
+        <div class="plan-ph">Multi-Tenant</div>
+        <div class="plan-name">SaaS Pro</div>
+        <div class="plan-tgt">Para consultores SSOMA</div>
+        <div class="plan-price" data-mensual="S/. 299" data-anual="S/. 239">S/. 299</div>
+        <div class="plan-period">/ mes · hasta 10 clientes</div>
+        <div class="plan-sep"></div>
+        <ul class="plan-feats">
+          <li class="plan-feat"><span class="plan-chk">✓</span><span>Suite completa — todos los módulos</span></li>
+          <li class="plan-feat"><span class="plan-chk">✓</span><span>Panel multi-empresa integrado</span></li>
+          <li class="plan-feat"><span class="plan-chk">✓</span><span>Dashboard CAPA + analítico</span></li>
+          <li class="plan-feat"><span class="plan-chk">✓</span><span>Generación masiva de reportes PDF</span></li>
+          <li class="plan-feat"><span class="plan-chk">✓</span><span>Soporte prioritario</span></li>
+          <li class="plan-feat"><span class="plan-chk">✓</span><span>Actualizaciones normativas auto.</span></li>
+        </ul>
+        <button class="plan-btn" onclick="goTo('#contacto')">Empezar →</button>
+      </div>
+      <div class="plan-card reveal d3">
+        <div class="plan-ph">Marca Blanca</div>
+        <div class="plan-name">Premium</div>
+        <div class="plan-tgt">Para empresas industriales</div>
+        <div class="plan-price" data-mensual="S/. 1,500" data-anual="S/. 1,200">S/. 1,500</div>
+        <div class="plan-period">/ mes · clientes ilimitados</div>
+        <div class="plan-sep"></div>
+        <ul class="plan-feats">
+          <li class="plan-feat"><span class="plan-chk">✓</span><span>Suite con tu logo y marca</span></li>
+          <li class="plan-feat"><span class="plan-chk">✓</span><span>Onboarding y configuración dedicada</span></li>
+          <li class="plan-feat"><span class="plan-chk">✓</span><span>Soporte 24/7 prioritario</span></li>
+          <li class="plan-feat"><span class="plan-chk">✓</span><span>Integración con sistemas propios</span></li>
+          <li class="plan-feat"><span class="plan-chk">✓</span><span>Reportes PDF corporativos</span></li>
+          <li class="plan-feat"><span class="plan-chk">✓</span><span>SLA garantizado</span></li>
+        </ul>
+        <button class="plan-btn" onclick="goTo('#contacto')">Solicitar →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACTO ════════════════════════════════════════ -->
+<section id="contacto">
+  <div class="ctct-inner">
+    <div class="reveal">
+      <div class="sec-lbl">Demo gratuita</div>
+      <h2 class="sec-h2">Veamos STROMA<br>con <em>tus datos reales.</em></h2>
+      <p>Sin compromisos. En 30 minutos te mostramos exactamente cuánto ahorra tu empresa.</p>
+    </div>
+    <form class="c-form reveal d1" id="cForm" onsubmit="event.preventDefault(); sendForm();">
+      <input type="hidden" name="_captcha" value="false">
+      <div class="c-row">
+        <div class="c-field"><label class="c-lbl">Nombre completo</label><input type="text" name="nombre" id="fNombre" class="c-input" placeholder="Ing. García López" required></div>
+        <div class="c-field"><label class="c-lbl">Empresa</label><input type="text" name="empresa" id="fEmpresa" class="c-input" placeholder="Empresa S.A.C." required></div>
+      </div>
+      <div class="c-row">
+        <div class="c-field"><label class="c-lbl">Correo corporativo</label><input type="email" name="email" id="fEmail" class="c-input" placeholder="nombre@empresa.com" required></div>
+        <div class="c-field"><label class="c-lbl">Teléfono / WhatsApp</label><input type="tel" name="telefono" id="fTel" class="c-input" placeholder="+51 9XX XXX XXX" required></div>
+      </div>
+      <div class="c-row">
+        <div class="c-field"><label class="c-lbl">Sector</label>
+          <select class="c-sel" name="sector" id="fSector">
+            <option>Logístico / Transporte</option>
+            <option>Minero / Extractivo</option>
+            <option>Construcción</option>
+            <option>Manufactura</option>
+            <option>Consultoría SSOMA</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="c-field"><label class="c-lbl">N° de trabajadores</label>
+          <select class="c-sel" name="trabajadores" id="fTrabajadores">
+            <option>1–20</option>
+            <option>21–100</option>
+            <option selected>101–500</option>
+            <option>500+</option>
+          </select>
+        </div>
+      </div>
+      <div class="c-field"><label class="c-lbl">¿Cuál es tu mayor dolor SSOMA hoy?</label><textarea class="c-area" name="dolor_ssoma" id="fDolor" placeholder="Ej: Pasamos 20 horas semanales llenando matrices a mano y nunca estamos listos para una inspección..."></textarea></div>
+      <button type="submit" class="c-submit" id="cBtn">Solicitar mi demo gratuita →</button>
+    </form>
+    <div class="c-ok" id="cOk">
+      <div class="c-ok-ico">✦</div>
+      <h3>Recibido. Nos vemos pronto.</h3>
+      <p>Te contactamos en menos de 24 horas para agendar tu demo personalizada con tus datos reales.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ══════════════════════════════════════════ -->
+<footer>
+  <div class="ft-copy">© 2026 <span>STROMA Suite</span> · Flavio Bravo · Lima, Perú · <span>stroma.pe</span></div>
+  <div class="ft-links">
+    <a href="#modulos">Módulos</a>
+    <a href="#planes">Planes</a>
+    <a href="#contacto">Contacto</a>
+    <a href="#">Privacidad</a>
+  </div>
+</footer>
+
+<!-- ═══ LIBRARIES ══════════════════════════════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   LENIS SMOOTH SCROLL
+   ════════════════════════════════════════════════════════════ */
+let lenis;
+try {
+  lenis = new Lenis({
+    duration: 1.4,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+    touchMultiplier: 1.5,
+  });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+  gsap.ticker.lagSmoothing(0);
+} catch (e) {
+  console.warn('Lenis not loaded, using native scroll.');
+}
+
+/* ════════════════════════════════════════════════════════════
+   THREE.JS — FLOATING 3D PRODUCT LANDSCAPE
+   ════════════════════════════════════════════════════════════ */
+gsap.registerPlugin(ScrollTrigger);
+
+const canvas = document.getElementById('webgl');
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 200);
+camera.position.set(0, 2, 50);
+
+const renderer = new THREE.WebGLRenderer({
+  canvas, antialias: true, alpha: true,
+  powerPreference: 'high-performance'
+});
+renderer.setClearColor(0x000000, 0);
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+/* ─── LIGHTING (warm organic feel) ─────────────────── */
+const ambientLight = new THREE.AmbientLight(0xC8E6D4, 0.35);
+scene.add(ambientLight);
+
+const hemiLight = new THREE.HemisphereLight(0xC8E6D4, 0x0F2318, 0.55);
+scene.add(hemiLight);
+
+const dirLight = new THREE.DirectionalLight(0xffffff, 0.5);
+dirLight.position.set(10, 18, 15);
+scene.add(dirLight);
+
+const dirLight2 = new THREE.DirectionalLight(0x6BA882, 0.25);
+dirLight2.position.set(-8, -5, -10);
+scene.add(dirLight2);
+
+/* ════════════════════════════════════════════════════════════
+   STROMA BRAND ECOSYSTEM — Isologo-inspired 3D Organisms
+   Based on: stroma_isologo_deep_dive.html anatomy
+   Nucleus → Filaments → Nodes → Orbital Ring
+   ════════════════════════════════════════════════════════════ */
+
+const isMobile = window.innerWidth < 768;
+const sphereDetail = isMobile ? 16 : 32;
+const tubeSegments = isMobile ? 16 : 32;
+
+/* ─── BRAND MATERIALS (with emissive glow) ─────────── */
+const matNucleus = new THREE.MeshStandardMaterial({
+  color: 0xC8E6D4, roughness: 0.3, metalness: 0.1,
+  emissive: 0xC8E6D4, emissiveIntensity: 0.15,
+});
+const matNodePrimary = new THREE.MeshStandardMaterial({
+  color: 0x6BA882, roughness: 0.4, metalness: 0.2,
+  emissive: 0x6BA882, emissiveIntensity: 0.08,
+});
+const matNodeSecondary = new THREE.MeshStandardMaterial({
+  color: 0x4D9E6A, roughness: 0.45, metalness: 0.15,
+  emissive: 0x4D9E6A, emissiveIntensity: 0.06,
+});
+const matNodeTertiary = new THREE.MeshStandardMaterial({
+  color: 0x2D6A4F, roughness: 0.5, metalness: 0.1,
+  transparent: true, opacity: 0.8,
+  emissive: 0x2D6A4F, emissiveIntensity: 0.04,
+});
+const matFilamentJade = new THREE.MeshStandardMaterial({
+  color: 0x6BA882, roughness: 0.5, metalness: 0.05,
+});
+const matFilamentLichen = new THREE.MeshStandardMaterial({
+  color: 0x4D9E6A, roughness: 0.55, metalness: 0.05,
+});
+const matFilamentDeep = new THREE.MeshStandardMaterial({
+  color: 0x2D6A4F, roughness: 0.6, metalness: 0.05,
+});
+const matOrbital = new THREE.MeshBasicMaterial({
+  color: 0xC8E6D4, transparent: true, opacity: 0.12,
+});
+
+/* ─── FILAMENT CURVE HELPER ────────────────────────── */
+function createFilamentCurve(angle, length, yBias) {
+  const cx = Math.cos(angle) * length * 0.55;
+  const cy = yBias + Math.sin(angle + 0.3) * length * 0.2;
+  const cz = Math.sin(angle * 0.7) * length * 0.15;
+  const ex = Math.cos(angle) * length;
+  const ey = yBias * 0.3 + Math.sin(angle) * length * 0.1;
+  const ez = Math.sin(angle * 0.5) * length * 0.2;
+  return new THREE.QuadraticBezierCurve3(
+    new THREE.Vector3(0, 0, 0),
+    new THREE.Vector3(cx, cy, cz),
+    new THREE.Vector3(ex, ey, ez)
+  );
+}
+
+/* ─── CREATE A SINGLE STROMA ORGANISM ──────────────── */
+/* Anatomy: Nucleus (center) → 6 Filaments (curves) → 6 Nodes (endpoints) → Orbital Ring */
+
+const filamentConfigs = [
+  { angle: -0.6,  len: 4.5, thick: 0.08, nodeMat: matNodePrimary,   nodeR: 0.5,  yBias:  0.8 },
+  { angle:  0.3,  len: 3.8, thick: 0.06, nodeMat: matNodeSecondary,  nodeR: 0.4,  yBias:  0.0 },
+  { angle:  1.1,  len: 4.0, thick: 0.05, nodeMat: matNodeTertiary,   nodeR: 0.35, yBias: -0.6 },
+  { angle:  2.5,  len: 3.5, thick: 0.05, nodeMat: matNodeTertiary,   nodeR: 0.3,  yBias: -0.7 },
+  { angle:  3.4,  len: 3.8, thick: 0.06, nodeMat: matNodeSecondary,  nodeR: 0.4,  yBias:  0.0 },
+  { angle:  4.5,  len: 4.2, thick: 0.05, nodeMat: matNodePrimary,    nodeR: 0.35, yBias:  0.5 },
+];
+const filamentMats = [matFilamentJade, matFilamentLichen, matFilamentDeep, matFilamentLichen, matFilamentJade, matFilamentDeep];
+
+function createStromaOrganism(position, scale, rotOffset) {
+  const group = new THREE.Group();
+  const animData = { nucleusMesh: null, nodes: [], orbitalRing: null, filaments: [] };
+
+  /* — NUCLEUS — */
+  const nucleusGeo = new THREE.SphereGeometry(1, sphereDetail, sphereDetail);
+  const nucleus = new THREE.Mesh(nucleusGeo, matNucleus);
+  group.add(nucleus);
+  animData.nucleusMesh = nucleus;
+
+  /* — FILAMENTS + NODES — */
+  filamentConfigs.forEach((cfg, i) => {
+    const curve = createFilamentCurve(cfg.angle + rotOffset, cfg.len, cfg.yBias);
+
+    /* Filament tube */
+    const tubeGeo = new THREE.TubeGeometry(curve, tubeSegments, cfg.thick, 6, false);
+    const tube = new THREE.Mesh(tubeGeo, filamentMats[i % filamentMats.length]);
+    group.add(tube);
+    animData.filaments.push({ mesh: tube, curve, cfg });
+
+    /* Node at endpoint */
+    const endpoint = curve.getPoint(1);
+    const nodeGeo = new THREE.SphereGeometry(cfg.nodeR, sphereDetail, sphereDetail);
+    const node = new THREE.Mesh(nodeGeo, cfg.nodeMat);
+    node.position.copy(endpoint);
+    group.add(node);
+    animData.nodes.push({ mesh: node, basePos: endpoint.clone() });
+  });
+
+  /* — ORBITAL RING (dashed) — */
+  const ringRadius = 2.5;
+  const ringPoints = [];
+  const ringSegCount = 64;
+  const dashRatio = 0.6; /* fraction of each segment that is solid */
+  for (let i = 0; i < ringSegCount; i++) {
+    const t = i / ringSegCount;
+    const segPhase = (i % 4) / 4;
+    if (segPhase < dashRatio) {
+      const a = t * Math.PI * 2;
+      ringPoints.push(new THREE.Vector3(
+        Math.cos(a) * ringRadius,
+        Math.sin(a * 0.3) * 0.15, /* slight wobble for organic feel */
+        Math.sin(a) * ringRadius
+      ));
+    }
+  }
+  if (ringPoints.length > 1) {
+    const ringGeo = new THREE.BufferGeometry().setFromPoints(ringPoints);
+    const ringLine = new THREE.Line(ringGeo, matOrbital);
+    group.add(ringLine);
+    animData.orbitalRing = ringLine;
+  }
+
+  /* Position and scale */
+  group.position.set(position[0], position[1], position[2]);
+  group.scale.setScalar(scale);
+  group.rotation.set(
+    Math.random() * Math.PI * 0.3,
+    Math.random() * Math.PI * 2,
+    Math.random() * Math.PI * 0.2
+  );
+
+  scene.add(group);
+  return { group, animData };
+}
+
+/* ─── ECOSYSTEM LAYOUT — 7 organisms across scene ──── */
+const organismConfigs = [
+  /* Near hero */
+  { pos: [14, 6, 52],   scale: 2.2, rotOff: 0.0 },
+  { pos: [-10, -4, 45], scale: 1.6, rotOff: 1.2 },
+  /* Problema / Módulos zone */
+  { pos: [-16, 5, 28],  scale: 1.8, rotOff: 2.5 },
+  { pos: [12, -6, 10],  scale: 2.5, rotOff: 0.8 },
+  /* ROI / Personas zone */
+  { pos: [-12, 4, -14], scale: 1.4, rotOff: 3.7 },
+  { pos: [15, -3, -32], scale: 2.0, rotOff: 1.5 },
+  /* Planes / Contacto zone */
+  { pos: [-8, 6, -52],  scale: 1.7, rotOff: 4.2 },
+];
+
+/* On mobile, use fewer organisms */
+const activeOrganismConfigs = isMobile
+  ? organismConfigs.filter((_, i) => i % 2 === 0)
+  : organismConfigs;
+
+const organisms = activeOrganismConfigs.map(cfg =>
+  createStromaOrganism(cfg.pos, cfg.scale, cfg.rotOff)
+);
+
+/* ─── INTER-ORGANISM FILAMENTS (network connections) ── */
+const interFilaments = [];
+if (!isMobile && organisms.length > 1) {
+  for (let i = 0; i < organisms.length - 1; i++) {
+    const a = organisms[i].group.position;
+    const b = organisms[i + 1].group.position;
+    const mid = new THREE.Vector3(
+      (a.x + b.x) * 0.5 + (Math.random() - 0.5) * 6,
+      (a.y + b.y) * 0.5 + (Math.random() - 0.5) * 4,
+      (a.z + b.z) * 0.5 + (Math.random() - 0.5) * 3
+    );
+    const curve = new THREE.QuadraticBezierCurve3(a.clone(), mid, b.clone());
+    const tubeGeo = new THREE.TubeGeometry(curve, 24, 0.025, 4, false);
+    const interMat = new THREE.MeshStandardMaterial({
+      color: 0x4D9E6A, transparent: true, opacity: 0.2, roughness: 0.7,
+    });
+    const tube = new THREE.Mesh(tubeGeo, interMat);
+    scene.add(tube);
+    interFilaments.push(tube);
+  }
+}
+
+/* ─── SPORE PARTICLES (glowing mint motes) ─────────── */
+const pCount = isMobile ? 80 : 180;
+const pGeo = new THREE.BufferGeometry();
+const pPos = new Float32Array(pCount * 3);
+for (let i = 0; i < pCount; i++) {
+  pPos[i * 3]     = (Math.random() - 0.5) * 55;
+  pPos[i * 3 + 1] = (Math.random() - 0.5) * 30;
+  pPos[i * 3 + 2] = 65 - Math.random() * 130;
+}
+pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+const pMat = new THREE.PointsMaterial({
+  size: 0.08, color: 0xC8E6D4, transparent: true, opacity: 0.4
+});
+scene.add(new THREE.Points(pGeo, pMat));
+
+/* ─── MOUSE PARALLAX ──────────────────────────────── */
+const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+document.addEventListener('mousemove', (e) => {
+  mouse.targetX = (e.clientX / window.innerWidth - 0.5) * 2;
+  mouse.targetY = (e.clientY / window.innerHeight - 0.5) * 2;
+});
+
+/* ─── SCROLL → CAMERA ─────────────────────────────── */
+const scrollState = { progress: 0 };
+
+ScrollTrigger.create({
+  start: 0,
+  end: 'max',
+  onUpdate: (self) => { scrollState.progress = self.progress; }
+});
+
+/* ─── RENDER LOOP ──────────────────────────────────── */
+const clock = new THREE.Clock();
+
+gsap.ticker.add(() => {
+  const elapsed = clock.getElapsedTime();
+  const p = scrollState.progress;
+
+  /* Mouse lerp (smooth parallax) */
+  mouse.x += (mouse.targetX - mouse.x) * 0.04;
+  mouse.y += (mouse.targetY - mouse.y) * 0.04;
+
+  /* Camera dolly tied to scroll */
+  const targetZ = 50 - p * 116;
+  const targetX = Math.sin(p * Math.PI * 2) * 5 + mouse.x * 2;
+  const targetY = 2 + Math.cos(p * Math.PI * 1.5) * 3.5 - mouse.y * 1.5;
+
+  camera.position.z += (targetZ - camera.position.z) * 0.06;
+  camera.position.x += (targetX - camera.position.x) * 0.06;
+  camera.position.y += (targetY - camera.position.y) * 0.06;
+  camera.lookAt(camera.position.x * 0.3, camera.position.y * 0.2, camera.position.z - 25);
+
+  /* Animate organisms */
+  organisms.forEach((org, oi) => {
+    const { group, animData } = org;
+    const speed = 0.3 + oi * 0.07;
+
+    /* Nucleus pulsing — gentle breathing */
+    const pulseScale = 1.0 + Math.sin(elapsed * speed + oi * 1.7) * 0.06;
+    animData.nucleusMesh.scale.setScalar(pulseScale);
+
+    /* Nucleus subtle glow pulsing */
+    animData.nucleusMesh.material.emissiveIntensity = 0.1 + Math.sin(elapsed * speed * 0.8) * 0.08;
+
+    /* Nodes bobbing */
+    animData.nodes.forEach((n, ni) => {
+      n.mesh.position.y = n.basePos.y + Math.sin(elapsed * 0.5 + oi * 2 + ni * 1.1) * 0.15;
+      /* Node pulse */
+      const nPulse = 1.0 + Math.sin(elapsed * 0.6 + ni * 0.9) * 0.04;
+      n.mesh.scale.setScalar(nPulse);
+    });
+
+    /* Orbital ring rotation */
+    if (animData.orbitalRing) {
+      animData.orbitalRing.rotation.y += 0.003 + oi * 0.001;
+      animData.orbitalRing.rotation.x = Math.sin(elapsed * 0.2 + oi) * 0.1;
+    }
+
+    /* Whole group gentle rotation (very slow drift) */
+    group.rotation.y += 0.001 + oi * 0.0003;
+    group.position.y = activeOrganismConfigs[oi].pos[1] +
+      Math.sin(elapsed * 0.25 + oi * 1.5) * 0.6;
+  });
+
+  /* Spore drift */
+  const positions = pGeo.attributes.position.array;
+  for (let i = 0; i < pCount; i++) {
+    positions[i * 3 + 1] += Math.sin(elapsed * 0.3 + i * 0.5) * 0.002;
+    positions[i * 3]     += Math.cos(elapsed * 0.2 + i * 0.3) * 0.001;
+  }
+  pGeo.attributes.position.needsUpdate = true;
+
+  renderer.render(scene, camera);
+});
+
+/* ─── RESIZE ───────────────────────────────────────── */
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+/* ════════════════════════════════════════════════════════════
+   GSAP SCROLL ANIMATIONS
+   ════════════════════════════════════════════════════════════ */
+
+/* Hero entrance */
+gsap.to('.hero-content', {
+  opacity: 1, y: 0, duration: 1.4,
+  ease: 'power3.out', delay: 0.3,
+});
+gsap.to('.scroll-hint', {
+  opacity: 1, duration: 0.8,
+  ease: 'power2.out', delay: 1.8,
+});
+
+/* Scroll reveal for .reveal elements */
+document.querySelectorAll('.reveal').forEach(el => {
+  ScrollTrigger.create({
+    trigger: el,
+    start: 'top 85%',
+    onEnter: () => el.classList.add('v'),
+  });
+});
+
+/* ─── NAV SCROLL ─────────────────────────────────── */
+ScrollTrigger.create({
+  start: 60,
+  end: 99999,
+  toggleClass: { targets: '#nav', className: 'scrolled' },
+});
+
+/* ─── BAR ANIMATION ──────────────────────────────── */
+const pvbEl = document.getElementById('pvb');
+if (pvbEl) {
+  ScrollTrigger.create({
+    trigger: pvbEl,
+    start: 'top 75%',
+    onEnter: () => {
+      document.querySelectorAll('.pv-bar').forEach(b => {
+        b.style.height = b.dataset.h + '%';
+      });
+    },
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   TICKER
+   ════════════════════════════════════════════════════════════ */
+const ti = ['Ley N° 29783 — SST','SUNAFIL','OEFA','MINAM','OSINERGMIN','ISO 45001',
+  'R.M. 050-2013','D.L. 1278','Huella de Carbono Perú','Método W.T. Fine',
+  'IPERC con IA','Matrices 5x5','Constancias PDF','Academia SSOMA','Dashboard CAPA'];
+const tt = document.getElementById('tkt');
+const th = ti.map(t => `<div class="ticker-item"><div class="ticker-dot"></div>${t}</div>`).join('');
+tt.innerHTML = th + th;
+
+/* ════════════════════════════════════════════════════════════
+   ROI CALCULATOR (exact formula preserved)
+   ════════════════════════════════════════════════════════════ */
+function fmt(n) { return 'S/. ' + Math.round(n).toLocaleString('es-PE'); }
+
+function calc() {
+  const w    = +document.getElementById('rW').value;
+  const i    = +document.getElementById('rI').value;
+  const h    = +document.getElementById('rH').value;
+  const sec  = +document.getElementById('rSec').value;
+  const plan = +document.getElementById('rPlan').value;
+
+  document.getElementById('wv').textContent = w;
+  document.getElementById('iv').textContent = i;
+  document.getElementById('hv').textContent = h;
+
+  const costoHH  = 45;
+  const hrsLib   = h * 52 * 0.80;
+  const ahorroHH = hrsLib * costoHH;
+
+  const probMulta = Math.min(i * 0.12 * sec, 0.85);
+  const multaProm = w < 50 ? 18000 : w < 200 ? 45000 : 120000;
+  const ahorroMu  = probMulta * multaProm * sec;
+
+  const tasaAcc  = 0.025 * sec;
+  const costoAcc = w * tasaAcc * 8500;
+  const ahorroAcc = costoAcc * 0.65;
+
+  const totalAhorro = ahorroHH + ahorroMu + ahorroAcc;
+  const inversionAnual = plan * 12;
+  const netoBeneficio  = totalAhorro - inversionAnual;
+  const roi = ((netoBeneficio / inversionAnual) * 100);
+  const payback = inversionAnual / (totalAhorro / 12);
+  const barPct = Math.min(Math.round((totalAhorro / (totalAhorro + inversionAnual)) * 100), 97);
+
+  document.getElementById('rAh').textContent  = fmt(totalAhorro);
+  document.getElementById('rMu').textContent  = fmt(ahorroMu);
+  document.getElementById('rHa').textContent  = Math.round(hrsLib) + ' hrs';
+  document.getElementById('rRO').textContent  = Math.round(roi) + '%';
+  document.getElementById('rPb').textContent  = payback < 1
+    ? 'Inmediato'
+    : Math.round(payback) + ' meses';
+  document.getElementById('rBar').style.width = barPct + '%';
+}
+calc();
+
+/* ════════════════════════════════════════════════════════════
+   PLANES TOGGLE
+   ════════════════════════════════════════════════════════════ */
+function setTog(btn, mode) {
+  document.querySelectorAll('.tog-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.plan-price').forEach(p => {
+    p.textContent = p.dataset[mode] || p.textContent;
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   SMOOTH SCROLL HELPER
+   ════════════════════════════════════════════════════════════ */
+function goTo(selector) {
+  const el = document.querySelector(selector);
+  if (el) {
+    if (lenis) {
+      lenis.scrollTo(el, { offset: 0, duration: 1.2 });
+    } else {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+}
+
+/* Override anchor clicks for Lenis */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', (e) => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      goTo(a.getAttribute('href'));
+    }
+  });
+});
+
+/* ════════════════════════════════════════════════════════════
+   CONTACT FORM (FormSubmit async — preserved)
+   ════════════════════════════════════════════════════════════ */
+async function sendForm() {
+  const btn  = document.getElementById('cBtn');
+  const form = document.getElementById('cForm');
+  const ok   = document.getElementById('cOk');
+
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  const data = new FormData(form);
+
+  try {
+    const res = await fetch('https://formsubmit.co/ajax/contacto@stroma.pe', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: data
+    });
+    if (res.ok) {
+      form.style.display = 'none';
+      ok.style.display = 'block';
+    } else {
+      throw new Error('Server error');
+    }
+  } catch (e) {
+    btn.disabled = false;
+    btn.textContent = 'Solicitar mi demo gratuita →';
+    alert('Hubo un error al enviar. Por favor, intenta de nuevo o escríbenos directamente a contacto@stroma.pe');
+  }
+}
+</script>
+</body>
+</html>
