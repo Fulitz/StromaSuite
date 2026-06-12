@@ -446,6 +446,15 @@ section { position: relative; z-index: 1; }
   -webkit-backdrop-filter: var(--glass-blur);
   border-bottom: 1px solid var(--glass-border);
 }
+#nosotros .sec-lbl {
+  color: var(--jade);
+}
+#nosotros .sec-h2 {
+  color: var(--menta) !important;
+}
+#nosotros .sec-h2 em {
+  color: var(--jade) !important;
+}
 .nosotros-inner {
   max-width: 1100px; margin: 0 auto;
 }
@@ -550,6 +559,62 @@ section { position: relative; z-index: 1; }
   }
   .caso-stats-mini {
     margin-bottom: 20px;
+  }
+}
+
+/* ─── ROI METHODOLOGY EXPLAINER ───────────────────── */
+.roi-methodology {
+  margin-top: 80px; padding-top: 80px;
+  border-top: 1px solid rgba(107, 168, 130, 0.12);
+  width: 100%;
+}
+.method-hdr {
+  text-align: center; margin-bottom: 44px;
+}
+.method-h3 {
+  font-family: var(--font-display); font-size: 26px; color: var(--ink);
+  margin-top: 8px; font-weight: 400;
+}
+.method-subp {
+  font-size: 13.5px; color: var(--slate); margin-top: 10px; max-width: 600px;
+  margin-left: auto; margin-right: auto; line-height: 1.6;
+}
+.method-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.method-card {
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(107, 168, 130, 0.12);
+  border-radius: var(--radius-md); padding: 28px;
+  display: flex; flex-direction: column; transition: all 0.3s;
+}
+.method-card:hover {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(107, 168, 130, 0.25);
+  transform: translateY(-3px);
+}
+.mc-num {
+  font-family: var(--font-mono); font-size: 12px; color: var(--jade);
+  font-weight: 500; margin-bottom: 12px;
+}
+.mc-title {
+  font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 10px;
+}
+.mc-p {
+  font-size: 12.5px; color: var(--slate); line-height: 1.65; margin-bottom: 20px;
+  flex-grow: 1;
+}
+.mc-formula {
+  background: rgba(107, 168, 130, 0.08);
+  border-radius: var(--radius-sm); padding: 8px 12px;
+  font-family: var(--font-mono); font-size: 10px; color: var(--accent-dim);
+  text-align: center; font-weight: 500;
+}
+
+/* Responsive Methodology */
+@media (max-width: 850px) {
+  .method-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1349,6 +1414,35 @@ footer {
           <div class="roi-bar-track"><div class="roi-bar-fill" id="rBar" style="width:77%"></div></div>
         </div>
         <div class="roi-disc">* Estimación basada en metodología William T. Fine. Considera costo de accidentabilidad, horas-hombre y riesgo de multas SUNAFIL según sector. Valores referenciales.</div>
+      </div>
+    </div>
+    
+    <!-- Sustento Matemático del ROI -->
+    <div class="roi-methodology reveal d1">
+      <div class="method-hdr">
+        <div class="sec-lbl">Sustento y Metodología</div>
+        <h3 class="method-h3">¿Cómo calculamos tu retorno de inversión?</h3>
+        <p class="method-subp">Nuestros algoritmos no generan números al azar. Se basan en la legislación peruana y fórmulas estándar de ingeniería de riesgos:</p>
+      </div>
+      <div class="method-grid">
+        <div class="method-card">
+          <div class="mc-num">01</div>
+          <div class="mc-title">Horas-Hombre Liberadas</div>
+          <p class="mc-p">Multiplicamos las horas semanales por 52 semanas. Reducimos el <strong>80%</strong> del tiempo operativo mediante la generación automatizada de IPERC e IA en charlas. Valorizado en un costo promedio de mercado de <strong>S/. 45/hora</strong> para ingenieros/supervisores de seguridad.</p>
+          <div class="mc-formula">Ahorro = Horas × 52 × 0.80 × S/. 45</div>
+        </div>
+        <div class="method-card">
+          <div class="mc-num">02</div>
+          <div class="mc-title">Mitigación de Multas SUNAFIL</div>
+          <p class="mc-p">Calculamos la probabilidad de fiscalización según tus inspecciones anuales e índice de riesgo. Aplicamos las multas promedio reales de la escala de la Ley 29783: <strong>S/. 18,000</strong> (hasta 50 trab.), <strong>S/. 45,000</strong> (hasta 200 trab.) y <strong>S/. 120,000</strong> (más de 200 trab.).</p>
+          <div class="mc-formula">Ahorro = Escala Multa × Probabilidad × Factor Sector</div>
+        </div>
+        <div class="method-card">
+          <div class="mc-num">03</div>
+          <div class="mc-title">Costo por Accidentabilidad (Fine)</div>
+          <p class="mc-p">Utilizamos la tasa estadística de accidentabilidad laboral en el Perú según el MTPE para tu sector. Estimamos un costo promedio de remediación legal y médica de <strong>S/. 8,500</strong> por incidente. La prevención predictiva de STROMA reduce esta tasa en un <strong>65%</strong>.</p>
+          <div class="mc-formula">Ahorro = Trabajadores × Tasa × S/. 8,500 × 0.65</div>
+        </div>
       </div>
     </div>
   </div>
