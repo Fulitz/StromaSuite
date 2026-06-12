@@ -105,8 +105,9 @@ nav.scrolled {
   display: flex; align-items: center; gap: 12px;
   text-decoration: none; color: var(--menta);
 }
+
 .nav-isotipo {
-  width: 38px; height: 38px;
+  width: 30px; height: 30px;
   flex-shrink: 0;
   transition: transform 0.3s ease;
 }
@@ -640,7 +641,7 @@ section { position: relative; z-index: 1; }
 .roi-field { margin-bottom: 18px; }
 .roi-input, .roi-select {
   width: 100%; padding: 13px 16px;
-  background: var(--white);
+  background: var(--papel);
   border: 1px solid var(--silver); border-radius: var(--radius-sm);
   font-family: var(--font-body); font-size: 14px; color: var(--ink);
   outline: none; transition: border-color 0.3s;
@@ -650,7 +651,7 @@ section { position: relative; z-index: 1; }
 .roi-select {
   background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%236BA882' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 14px center;
-  background-color: var(--white); cursor: pointer;
+  background-color: var(--papel); cursor: pointer;
 }
 .range-wrap { display: flex; align-items: center; gap: 14px; }
 .roi-range {
@@ -906,7 +907,7 @@ section { position: relative; z-index: 1; }
 .plan-card:not(.hl) .plan-btn:hover { background: var(--accent); color: var(--bosque); }
 .plan-card.hl .plan-btn { background: var(--accent); color: var(--bosque); }
 .plan-card.hl .plan-btn:hover {
-  background: var(--white); box-shadow: 0 8px 24px var(--accent-glow);
+  background: var(--papel); box-shadow: 0 8px 24px var(--accent-glow);
 }
 
 /* ─── CONTACTO ─────────────────────────────────────── */
@@ -936,7 +937,7 @@ section { position: relative; z-index: 1; }
   text-transform: uppercase; color: var(--slate);
 }
 .c-input {
-  padding: 14px 16px; background: var(--white);
+  padding: 14px 16px; background: var(--papel);
   border: 1px solid var(--silver); border-radius: var(--radius-sm);
   font-family: var(--font-body); font-size: 14px; color: var(--ink);
   outline: none; transition: border-color 0.3s;
@@ -944,17 +945,17 @@ section { position: relative; z-index: 1; }
 .c-input::placeholder { color: var(--mist); }
 .c-input:focus { border-color: var(--accent); }
 .c-sel {
-  padding: 14px 16px; background: var(--white);
+  padding: 14px 16px; background: var(--papel);
   border: 1px solid var(--silver); border-radius: var(--radius-sm);
   font-family: var(--font-body); font-size: 14px; color: var(--ink);
   outline: none; cursor: pointer; -webkit-appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%236BA882' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 14px center;
-  background-color: var(--white); transition: border-color 0.3s;
+  background-color: var(--papel); transition: border-color 0.3s;
 }
 .c-sel:focus { border-color: var(--accent); }
 .c-area {
-  padding: 14px 16px; background: var(--white);
+  padding: 14px 16px; background: var(--papel);
   border: 1px solid var(--silver); border-radius: var(--radius-sm);
   font-family: var(--font-body); font-size: 14px; color: var(--ink);
   outline: none; resize: vertical; min-height: 100px;
@@ -1032,6 +1033,265 @@ footer {
 .ft-copy { font-size: 11px; color: rgba(200, 230, 212, 0.35); }
 .ft-copy span { color: var(--jade); font-weight: 500; }
 
+
+/* ─── HERO MOCKUP OF PRODUCT ──────────────────────── */
+.hero-mockup-wrapper {
+  max-width: 860px; margin: 48px auto 0 auto; width: 100%;
+  perspective: 1000px;
+}
+.browser-mockup {
+  background: #122218; /* custom dark green musgo background */
+  border: 1px solid var(--arena);
+  border-radius: var(--radius-md);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  overflow: hidden;
+  transform: rotateX(8deg);
+  transition: transform 0.5s ease;
+}
+.browser-mockup:hover {
+  transform: rotateX(0deg) translateY(-5px);
+}
+.browser-header {
+  background: rgba(15, 35, 24, 0.95);
+  border-bottom: 1px solid rgba(232, 228, 219, 0.12);
+  padding: 12px 24px;
+  display: grid; grid-template-columns: 80px 1fr 80px; align-items: center;
+}
+.browser-buttons {
+  display: flex; gap: 6px;
+}
+.bb-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+}
+.dot-red { background: #C0392B; }
+.dot-yellow { background: #E9D785; }
+.dot-green { background: #6BA882; }
+.browser-address {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(107, 168, 130, 0.15);
+  border-radius: 6px; padding: 4px 20px; font-family: var(--font-mono);
+  font-size: 11px; color: var(--jade); text-align: center;
+  max-width: 380px; margin: 0 auto; width: 100%;
+}
+.browser-body {
+  padding: 28px; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px;
+}
+.panel-title {
+  font-size: 11px; font-weight: 600; color: var(--menta);
+  text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 14px;
+  text-align: left;
+}
+.bb-left {
+  display: flex; flex-direction: column;
+}
+.risk-matrix {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px;
+  background: rgba(15, 35, 24, 0.4); padding: 12px; border-radius: var(--radius-sm);
+  border: 1px solid rgba(107, 168, 130, 0.1);
+}
+.rm-hdr {
+  font-size: 9px; font-weight: bold; color: var(--salvia); text-align: center;
+  align-self: center;
+}
+.rm-label {
+  font-size: 9px; font-weight: bold; color: var(--salvia); text-align: center;
+  align-self: center;
+}
+.rm-cell {
+  aspect-ratio: 1.25; border-radius: 4px; display: flex; align-items: center;
+  justify-content: center; font-size: 10px; font-weight: 700; color: #0F2318;
+  cursor: pointer; transition: transform 0.2s;
+}
+.rm-cell:hover {
+  transform: scale(1.1);
+}
+.val-green { background: #6BA882; }
+.val-yellow { background: #E9D785; }
+.val-orange { background: #D69E2E; }
+.val-red { background: #C0392B; color: #fff; }
+.matrix-legend {
+  display: flex; justify-content: space-between; margin-top: 12px;
+}
+.leg-item {
+  font-size: 9.5px; color: var(--salvia); display: flex; align-items: center; gap: 4px;
+}
+.leg-dot {
+  width: 8px; height: 8px; border-radius: 50%; display: inline-block;
+}
+.bg-red { background: #C0392B; }
+.bg-orange { background: #D69E2E; }
+.bg-yellow { background: #E9D785; }
+.bg-green { background: #6BA882; }
+
+.bb-right {
+  display: flex; flex-direction: column; gap: 20px;
+}
+.kpi-panel {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.kpi-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(107, 168, 130, 0.12);
+  border-radius: var(--radius-sm); padding: 14px;
+  display: flex; flex-direction: column; align-items: flex-start;
+}
+.kpi-lbl {
+  font-size: 9.5px; color: var(--salvia); font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.02em; text-align: left;
+}
+.kpi-val {
+  font-family: var(--font-display); font-size: 22px; font-weight: bold;
+  margin-top: 4px; line-height: 1.1;
+}
+.text-green { color: var(--menta); }
+.text-red { color: #FF5F56; }
+.kpi-sub {
+  font-size: 8.5px; color: rgba(200, 230, 212, 0.45); margin-top: 4px;
+}
+.chart-panel {
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(107, 168, 130, 0.08);
+  border-radius: var(--radius-sm); padding: 14px;
+}
+.bar-chart {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  height: 90px; padding-top: 10px; border-bottom: 1px solid rgba(107, 168, 130, 0.2);
+}
+.chart-bar {
+  width: 14%; background: rgba(107, 168, 130, 0.22); border-radius: 4px 4px 0 0;
+  position: relative; transition: all 0.3s; cursor: pointer;
+}
+.chart-bar:hover {
+  background: var(--jade);
+}
+.chart-bar.active {
+  background: linear-gradient(0deg, var(--liquen), var(--menta));
+}
+.chart-bar::after {
+  content: attr(data-val); position: absolute; top: 105%; left: 50%;
+  transform: translateX(-50%); font-size: 8.5px; color: var(--salvia);
+}
+
+/* ─── IPERC INTERACTIVE WIDGET ─────────────────────── */
+.iperc-preview-widget {
+  margin-top: 20px; background: rgba(15, 35, 24, 0.6);
+  border: 1px solid rgba(107, 168, 130, 0.2);
+  border-radius: var(--radius-sm); padding: 18px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.iperc-tabs {
+  display: flex; gap: 8px; border-bottom: 1px solid rgba(107, 168, 130, 0.15);
+  padding-bottom: 8px;
+}
+.iperc-tab {
+  background: transparent; border: none; font-size: 10px; font-weight: 600;
+  font-family: var(--font-body); color: rgba(200, 230, 212, 0.45); cursor: pointer;
+  padding: 4px 8px; border-radius: 4px; transition: all 0.25s;
+  text-transform: uppercase; letter-spacing: 0.02em;
+}
+.iperc-tab.active {
+  color: var(--menta); background: rgba(107, 168, 130, 0.18);
+}
+.iperc-tab:hover {
+  color: var(--menta);
+}
+.iperc-terminal {
+  font-family: var(--font-mono); font-size: 11.5px; line-height: 1.6;
+  display: flex; flex-direction: column; gap: 6px; text-align: left;
+}
+.terminal-line {
+  color: rgba(200, 230, 212, 0.85);
+}
+.term-lbl {
+  color: var(--jade); font-weight: bold; margin-right: 4px;
+}
+
+/* ─── COPY CFO METRICS BUTTON ──────────────────────── */
+.roi-copy-cfo-wrap {
+  position: relative; display: flex; justify-content: center; margin-top: 14px;
+}
+.btn-copy-cfo {
+  background: transparent; border: none; color: var(--jade); font-size: 11.5px;
+  font-weight: 500; font-family: var(--font-body); cursor: pointer; text-decoration: underline;
+  transition: color 0.2s; display: inline-flex; align-items: center; gap: 4px;
+}
+.btn-copy-cfo:hover {
+  color: var(--menta);
+}
+.copy-tooltip {
+  position: absolute; bottom: 120%; left: 50%; transform: translateX(-50%);
+  background: var(--bosque); color: var(--menta); font-size: 10px; font-weight: 600;
+  padding: 4px 8px; border-radius: 4px; border: 1px solid rgba(107, 168, 130, 0.25);
+  opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.copy-tooltip.show {
+  opacity: 1;
+}
+
+/* ─── WHATSAPP FALLBACK LINK ──────────────────────── */
+.c-whatsapp-fallback {
+  margin-top: 18px; text-align: center;
+}
+.wa-fallback-link {
+  font-size: 13px; font-weight: 500; color: var(--jade);
+  font-family: var(--font-body); text-decoration: none;
+  transition: color 0.3s;
+}
+.wa-fallback-link:hover {
+  color: var(--menta);
+}
+
+/* ─── FAQS ACCORDION ──────────────────────────────── */
+#faq {
+  padding: 120px 48px;
+  background: var(--glass-bg-light);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-border);
+}
+.faq-inner {
+  max-width: 860px; margin: 0 auto;
+}
+.faq-list {
+  display: flex; flex-direction: column; gap: 16px; margin-top: 32px;
+}
+.faq-item {
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(107, 168, 130, 0.12);
+  border-radius: var(--radius-md); overflow: hidden;
+  transition: all 0.3s ease;
+}
+.faq-item:hover {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(107, 168, 130, 0.25);
+}
+.faq-trigger {
+  width: 100%; padding: 24px 32px; background: transparent; border: none;
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--font-body); font-size: 16px; font-weight: 500;
+  color: var(--ink); text-align: left; cursor: pointer; gap: 20px;
+}
+.faq-icon {
+  font-size: 20px; font-weight: 300; color: var(--jade); transition: transform 0.3s ease;
+}
+.faq-content {
+  max-height: 0; overflow: hidden; transition: max-height 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  padding: 0 32px;
+}
+.faq-content p {
+  padding-bottom: 24px; font-size: 14px; color: var(--slate); line-height: 1.7;
+}
+.faq-item.active .faq-icon {
+  transform: rotate(45deg);
+}
+
+/* Responsive browser mockup */
+@media (max-width: 850px) {
+  .browser-body {
+    grid-template-columns: 1fr; gap: 20px;
+  }
+}
+
 /* ─── ANIMATIONS ───────────────────────────────────── */
 @keyframes pulseDot {
   0%, 100% { opacity: 1; transform: scale(1); }
@@ -1098,7 +1358,7 @@ footer {
 <nav id="nav">
   <a href="#" class="nav-logo">
     <!-- STROMA Isotipo SVG — versión para fondos oscuros -->
-    <svg class="nav-isotipo" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="nav-isotipo" width="30" height="30" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="30" cy="30" r="8.5" fill="#C8E6D4"/>
       <path d="M36 24 Q43 17 50 14" stroke="#6BA882" stroke-width="2.2" stroke-linecap="round" fill="none"/>
       <circle cx="50" cy="14" r="3.5" fill="#6BA882"/>
@@ -1162,9 +1422,109 @@ footer {
       <a href="#contacto" class="btn-primary">Solicitar demo gratuita →</a>
       <a href="#roi" class="btn-ghost">Calcular mi ROI</a>
     </div>
+    
+    <!-- Hero Mockup de Producto -->
+    <div class="hero-mockup-wrapper" id="heroMockup">
+      <div class="browser-mockup">
+        <!-- Barra superior del Navegador -->
+        <div class="browser-header">
+          <div class="browser-buttons">
+            <span class="bb-dot dot-red"></span>
+            <span class="bb-dot dot-yellow"></span>
+            <span class="bb-dot dot-green"></span>
+          </div>
+          <div class="browser-address">app.stromasuite.pe/dashboard</div>
+          <div></div>
+        </div>
+        <!-- Cuerpo del Navegador -->
+        <div class="browser-body">
+          <!-- Panel Izquierdo: Matriz de Riesgos -->
+          <div class="bb-left">
+            <div class="panel-title">Matriz de Riesgos IPERC Dinámica</div>
+            <div class="risk-matrix">
+              <div class="rm-hdr">P \ S</div>
+              <div class="rm-hdr">1</div>
+              <div class="rm-hdr">2</div>
+              <div class="rm-hdr">3</div>
+              <div class="rm-hdr">4</div>
+              <div class="rm-hdr">5</div>
+              
+              <div class="rm-label">A</div>
+              <div class="rm-cell val-yellow">5</div>
+              <div class="rm-cell val-orange">10</div>
+              <div class="rm-cell val-red">15</div>
+              <div class="rm-cell val-red">20</div>
+              <div class="rm-cell val-red">25</div>
+              
+              <div class="rm-label">B</div>
+              <div class="rm-cell val-green">4</div>
+              <div class="rm-cell val-yellow">8</div>
+              <div class="rm-cell val-orange">12</div>
+              <div class="rm-cell val-red">16</div>
+              <div class="rm-cell val-red">20</div>
+              
+              <div class="rm-label">C</div>
+              <div class="rm-cell val-green">3</div>
+              <div class="rm-cell val-yellow">6</div>
+              <div class="rm-cell val-yellow">9</div>
+              <div class="rm-cell val-orange">12</div>
+              <div class="rm-cell val-red">15</div>
+              
+              <div class="rm-label">D</div>
+              <div class="rm-cell val-green">2</div>
+              <div class="rm-cell val-green">4</div>
+              <div class="rm-cell val-yellow">6</div>
+              <div class="rm-cell val-yellow">8</div>
+              <div class="rm-cell val-orange">10</div>
+              
+              <div class="rm-label">E</div>
+              <div class="rm-cell val-green">1</div>
+              <div class="rm-cell val-green">2</div>
+              <div class="rm-cell val-green">3</div>
+              <div class="rm-cell val-green">4</div>
+              <div class="rm-cell val-yellow">5</div>
+            </div>
+            <div class="matrix-legend">
+              <div class="leg-item"><span class="leg-dot bg-green"></span> Bajo</div>
+              <div class="leg-item"><span class="leg-dot bg-yellow"></span> Medio</div>
+              <div class="leg-item"><span class="leg-dot bg-orange"></span> Alto</div>
+              <div class="leg-item"><span class="leg-dot bg-red"></span> Crítico</div>
+            </div>
+          </div>
+          <!-- Panel Derecho: KPIs & Mini Gráfico -->
+          <div class="bb-right">
+            <div class="panel-title">KPIs Operativos</div>
+            <div class="kpi-panel">
+              <div class="kpi-card">
+                <span class="kpi-lbl">Índice Frecuencia</span>
+                <span class="kpi-val text-green">1.24</span>
+                <span class="kpi-sub">Meta SUNAFIL &lt; 3.0</span>
+              </div>
+              <div class="kpi-card">
+                <span class="kpi-lbl">Riesgos Críticos</span>
+                <span class="kpi-val text-red">03</span>
+                <span class="kpi-sub">Bajo Control Predictivo</span>
+              </div>
+            </div>
+            <div class="chart-panel">
+              <div class="panel-title">Incidentes por Mes</div>
+              <div class="bar-chart">
+                <div class="chart-bar" style="height: 35%;" data-val="3"></div>
+                <div class="chart-bar" style="height: 55%;" data-val="5"></div>
+                <div class="chart-bar" style="height: 20%;" data-val="2"></div>
+                <div class="chart-bar" style="height: 85%;" data-val="8"></div>
+                <div class="chart-bar active" style="height: 40%;" data-val="4"></div>
+                <div class="chart-bar" style="height: 65%;" data-val="6"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="hero-stats">
       <div class="stat-item"><div class="stat-val">90%</div><div class="stat-label">Reducción carga admin.</div></div>
-      <div class="stat-item"><div class="stat-val">S/. 0</div><div class="stat-label">Multas SUNAFIL proy.</div></div>
+      <div class="stat-item"><div class="stat-val">100%</div><div class="stat-label">Blindaje SUNAFIL</div></div>
       <div class="stat-item"><div class="stat-val">7 mo.</div><div class="stat-label">Payback promedio</div></div>
       <div class="stat-item"><div class="stat-val">IA</div><div class="stat-label">Matrices IPERC auto.</div></div>
     </div>
@@ -1239,7 +1599,23 @@ footer {
       <div class="mod-tag">IA · IPERC &amp; MIA</div>
       <div class="mod-name">IPERC &amp; Gestión de MIA con IA</div>
       <div class="mod-desc">Identificación de peligros y aspectos ambientales con evaluación legal por R.M. 050 y Conesa. Genera automáticamente el 80% de tus matrices de riesgo según puesto y sector industrial. Renderiza mapas de calor 5×5 dinámicos e interactivos. Exporta informes y matrices en PDF/Excel de alta calidad corporativa.</div>
-      <a href="#contacto" class="mod-cta">Abrir módulo <span class="mod-cta-arr">→</span></a>
+      
+      <!-- Widget de Previsualización IPERC -->
+      <div class="iperc-preview-widget">
+        <div class="iperc-tabs">
+          <button type="button" class="iperc-tab active" onclick="event.stopPropagation(); switchIpercTab(this, 'soldador')">Soldador</button>
+          <button type="button" class="iperc-tab" onclick="event.stopPropagation(); switchIpercTab(this, 'operario')">Operario de Almacén</button>
+          <button type="button" class="iperc-tab" onclick="event.stopPropagation(); switchIpercTab(this, 'conductor')">Conductor de Flota</button>
+        </div>
+        <div class="iperc-terminal" id="ipercTerminal">
+          <div class="terminal-line"><span class="term-lbl">[Puesto]</span> Soldador</div>
+          <div class="terminal-line"><span class="term-lbl">[Peligro]</span> Exposición a humos metálicos (óx. de hierro, manganeso) y radiación UV no ionizante.</div>
+          <div class="terminal-line"><span class="term-lbl">[Riesgo / Consecuencia]</span> Inhalación de sustancias tóxicas / Neumoconiosis, conjuntivitis actínica y quemaduras oculares.</div>
+          <div class="terminal-line"><span class="term-lbl">[Control Predictivo IA]</span> Campanas extractoras móviles de alto vacío, respirador 3M con filtro P100 y sensor IoT de radiación UV en EPP.</div>
+        </div>
+      </div>
+
+      <a href="#contacto" class="mod-cta" style="margin-top: 24px;">Abrir módulo <span class="mod-cta-arr">→</span></a>
     </div>
     <div class="mod-card reveal d2">
       <div class="mod-icon">📊</div>
@@ -1412,6 +1788,10 @@ footer {
         <div class="roi-bar-wrap">
           <div class="roi-bar-labels"><span>Inversión STROMA</span><span>Ahorro generado</span></div>
           <div class="roi-bar-track"><div class="roi-bar-fill" id="rBar" style="width:77%"></div></div>
+        </div>
+        <div class="roi-copy-cfo-wrap">
+          <button class="btn-copy-cfo" id="btnCopyCfo" onclick="copyCfoSummary()">📋 Copiar Resumen Ejecutivo</button>
+          <span class="copy-tooltip" id="copyTooltip">¡Copiado!</span>
         </div>
         <div class="roi-disc">* Estimación basada en metodología William T. Fine. Considera costo de accidentabilidad, horas-hombre y riesgo de multas SUNAFIL según sector. Valores referenciales.</div>
       </div>
@@ -1609,11 +1989,66 @@ footer {
       </div>
       <div class="c-field"><label class="c-lbl">¿Cuál es tu mayor dolor SSOMA hoy?</label><textarea class="c-area" name="dolor_ssoma" id="fDolor" placeholder="Ej: Pasamos 20 horas semanales llenando matrices a mano y nunca estamos listos para una inspección..."></textarea></div>
       <button type="submit" class="c-submit" id="cBtn">Solicitar mi demo gratuita →</button>
+      <div class="c-whatsapp-fallback">
+        <a href="https://wa.me/51900000000?text=Hola%20STROMA%20Suite,%20me%20gustaría%20coordinar%20una%20sesión%20demostrativa%20personalizada%20con%20los%20datos%20de%20mi%20empresa." target="_blank" rel="noopener noreferrer" class="wa-fallback-link">
+          O si prefieres, coordina una sesión directamente por WhatsApp ↗
+        </a>
+      </div>
     </form>
     <div class="c-ok" id="cOk">
       <div class="c-ok-ico">✦</div>
       <h3>Recibido. Nos vemos pronto.</h3>
       <p>Te contactamos en menos de 24 horas para agendar tu demo personalizada con tus datos reales.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PREGUNTAS FRECUENTES (FAQs) ═══════════════════ -->
+<section id="faq">
+  <div class="faq-inner reveal">
+    <div class="sec-lbl">Preguntas Frecuentes</div>
+    <h2 class="sec-h2">Resolvemos tus <em>dudas.</em></h2>
+    <div class="faq-list">
+      <!-- Pregunta 1 -->
+      <div class="faq-item">
+        <button class="faq-trigger" onclick="toggleFaq(this)">
+          <span>¿La información de mi empresa está segura?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-content">
+          <p>Absolutamente. STROMA Suite está construida sobre una arquitectura cifrada de extremo a extremo con estrictos estándares de gobernanza de datos. Toda la información de tu organización, incluyendo registros de salud ocupacional e informes ambientales, se almacena de forma segura en servidores aislados con copias de seguridad automatizadas diarias.</p>
+        </div>
+      </div>
+      <!-- Pregunta 2 -->
+      <div class="faq-item">
+        <button class="faq-trigger" onclick="toggleFaq(this)">
+          <span>¿Los reportes PDF sirven ante inspecciones oficiales?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-content">
+          <p>Sí, al 100%. Todos los reportes, matrices IPERC y registros de capacitación exportados por el sistema están diseñados bajo la estructura legal y especificaciones exactas de la R.M. 050-2013-TR y la Ley N° 29783 del Perú. Son documentos oficiales y válidos para presentarse ante SUNAFIL, OEFA o cualquier auditoría de certificación.</p>
+        </div>
+      </div>
+      <!-- Pregunta 3 -->
+      <div class="faq-item">
+        <button class="faq-trigger" onclick="toggleFaq(this)">
+          <span>Como consultor, ¿puedo personalizar la plataforma?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-content">
+          <p>Sí. Nuestros planes Pro y Premium ofrecen un formato multi-tenant con capacidades de Marca Blanca (White-label). Esto te permite configurar la plataforma con el logotipo, colores corporativos y dominio propio de tu consultora o de tus clientes finales, brindándoles un portal digital profesional bajo tu propia marca.</p>
+        </div>
+      </div>
+      <!-- Pregunta 4 -->
+      <div class="faq-item">
+        <button class="faq-trigger" onclick="toggleFaq(this)">
+          <span>¿El sistema se actualiza ante cambios legales?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-content">
+          <p>Sí, de forma automatizada. Contamos con un servicio de monitoreo regulatorio continuo que detecta actualizaciones en el diario oficial El Peruano, SUNAFIL, OEFA y MINAM. Ante cualquier cambio normativo o modificación de límites permisibles, el sistema actualiza automáticamente los motores de cálculo e IPERC correspondientes.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -2001,6 +2436,7 @@ window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 });
 
 /* ════════════════════════════════════════════════════════════
@@ -2017,6 +2453,7 @@ gsap.set('.hero-badge', { opacity: 0, y: 15 });
 gsap.set('h1.hero-h1', { opacity: 0, y: 25 });
 gsap.set('.hero-sub', { opacity: 0, y: 15 });
 gsap.set('.hero-actions', { opacity: 0, y: 15 });
+gsap.set('.hero-mockup-wrapper', { opacity: 0, y: 35 });
 gsap.set('.stat-item', { opacity: 0, y: 15 });
 
 // SVG elements initial states
@@ -2083,6 +2520,11 @@ heroTl.to('.hero-sub', {
 heroTl.to('.hero-actions', {
   opacity: 1, y: 0, duration: 0.6, ease: 'power2.out'
 }, '-=0.6');
+
+// 10.5. Mockup browser animates
+heroTl.to('.hero-mockup-wrapper', {
+  opacity: 1, y: 0, duration: 0.9, ease: 'power3.out'
+}, '-=0.5');
 
 // 11. Core metrics stagger in
 heroTl.to('.stat-item', {
@@ -2245,6 +2687,120 @@ async function sendForm() {
     btn.disabled = false;
     btn.textContent = 'Solicitar mi demo gratuita →';
     alert('Hubo un error al enviar. Por favor, intenta de nuevo o escríbenos directamente a contacto@stroma.pe');
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   IPERC INTERACTIVE PREVIEW DATA & SWITCHER
+   ════════════════════════════════════════════════════════════ */
+const ipercData = {
+  soldador: {
+    peligro: "Exposición a humos metálicos (óx. de hierro, manganeso) y radiación UV no ionizante.",
+    riesgo: "Inhalación de sustancias tóxicas / Neumoconiosis, conjuntivitis actínica y quemaduras oculares.",
+    control: "Campanas extractoras móviles de alto vacío, respirador 3M con filtro P100 y sensor IoT de radiación UV en EPP."
+  },
+  operario: {
+    peligro: "Manipulación manual de cargas pesadas y tránsito de equipos móviles (montacargas).",
+    riesgo: "Sobreesfuerzo físico / Lumbalgia aguda y atropello por maquinaria / Fracturas graves.",
+    control: "Fajas lumbares ergonómicas de control activo, delimitación de pasarelas peatonales mediante proyectores LED y telemetría de proximidad."
+  },
+  conductor: {
+    peligro: "Jornadas de conducción prolongadas y factores climáticos adversos en rutas (neblina, lluvia).",
+    riesgo: "Somnolencia y fatiga extrema / Colisión vehicular, despiste o volcadura con fatalidad.",
+    control: "Cámaras inteligentes de fatiga activa (DSM) con alertas en cabina, telemetría GPS y control automático de horas de descanso."
+  }
+};
+
+function switchIpercTab(btn, puesto) {
+  const tabs = btn.parentElement.querySelectorAll('.iperc-tab');
+  tabs.forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+
+  const terminal = document.getElementById('ipercTerminal');
+  const data = ipercData[puesto];
+  
+  if (data) {
+    let puestoLabel = puesto === 'soldador' ? 'Soldador' 
+                    : puesto === 'operario' ? 'Operario de Almacén' 
+                    : 'Conductor de Flota';
+    terminal.innerHTML = `
+      <div class="terminal-line"><span class="term-lbl">[Puesto]</span> ${puestoLabel}</div>
+      <div class="terminal-line"><span class="term-lbl">[Peligro]</span> ${data.peligro}</div>
+      <div class="terminal-line"><span class="term-lbl">[Riesgo / Consecuencia]</span> ${data.riesgo}</div>
+      <div class="terminal-line"><span class="term-lbl">[Control Predictivo IA]</span> ${data.control}</div>
+    `;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   CFO EXECUTIVE SUMMARY CLIPBOARD COPY
+   ════════════════════════════════════════════════════════════ */
+async function copyCfoSummary() {
+  const sector = document.getElementById('rSec').options[document.getElementById('rSec').selectedIndex].text;
+  const trabajadores = document.getElementById('rW').value;
+  const plan = document.getElementById('rPlan').options[document.getElementById('rPlan').selectedIndex].text;
+  const ahorro = document.getElementById('rAh').textContent;
+  const payback = document.getElementById('rPb').textContent;
+  const horas = document.getElementById('rHa').textContent;
+  const roi = document.getElementById('rRO').textContent;
+  const multas = document.getElementById('rMu').textContent;
+
+  const summaryText = `*RESUMEN EJECUTIVO: PROPUESTA DE INVERSIÓN STROMA SUITE*
+--------------------------------------------------
+Estimada Gerencia / CFO,
+
+Presentamos el análisis de Retorno de Inversión (ROI) y ahorro proyectado al digitalizar nuestra gestión SSOMA con la plataforma STROMA Suite:
+
+• *Sector Industrial:* ${sector}
+• *Dotación Evaluada:* ${trabajadores} trabajadores
+• *Ahorro Anual Proyectado:* ${ahorro} (vs. gestión manual actual)
+• *Retorno de Inversión (ROI):* ${roi} en el primer año
+• *Tiempo de Recupero (Payback):* ${payback}
+• *Eficiencia Operativa:* ${horas} liberadas al año (reducción de 80% en carga admin)
+• *Mitigación de Riesgos:* ${multas} en multas potenciales SUNAFIL evitadas
+
+*Sustento de la Propuesta:*
+El cálculo utiliza la metodología estándar William T. Fine, ponderando tasas de accidentabilidad oficiales del MTPE, escala de multas vigente de la Ley N° 29783 y costos operativos de supervisión.
+
+*Plan STROMA Seleccionado:* ${plan}
+
+Quedo atento para coordinar la demo técnica de 30 minutos y revisar los detalles.`;
+
+  try {
+    await navigator.clipboard.writeText(summaryText);
+    const tooltip = document.getElementById('copyTooltip');
+    tooltip.classList.add('show');
+    setTimeout(() => {
+      tooltip.classList.remove('show');
+    }, 1800);
+  } catch (err) {
+    console.error('Failed to copy text: ', err);
+    alert('No se pudo copiar automáticamente. Por favor, selecciona y copia el resumen manualmente.');
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   FAQs ACCORDION TRIGGER
+   ════════════════════════════════════════════════════════════ */
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const content = item.querySelector('.faq-content');
+  const isActive = item.classList.contains('active');
+
+  // Close all other FAQ items (accordion)
+  document.querySelectorAll('.faq-item').forEach(otherItem => {
+    if (otherItem !== item) {
+      otherItem.classList.remove('active');
+      otherItem.querySelector('.faq-content').style.maxHeight = null;
+    }
+  });
+
+  if (isActive) {
+    item.classList.remove('active');
+    content.style.maxHeight = null;
+  } else {
+    item.classList.add('active');
+    content.style.maxHeight = content.scrollHeight + 'px';
   }
 }
 </script>
