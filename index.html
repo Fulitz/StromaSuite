@@ -421,22 +421,137 @@ section { position: relative; z-index: 1; }
 .mod-tag {
   display: inline-block; font-size: 9px; font-weight: 600;
   letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--accent-dim); background: var(--accent-glow);
+  color: var(--menta); background: rgba(107, 168, 130, 0.18);
   padding: 4px 10px; border-radius: 4px; margin-bottom: 10px;
 }
 .mod-name {
-  font-size: 18px; font-weight: 600; color: var(--ink); margin-bottom: 10px;
+  font-size: 18px; font-weight: 600; color: var(--menta); margin-bottom: 10px;
 }
-.mod-desc { font-size: 13px; color: var(--slate); line-height: 1.7; }
+.mod-desc { font-size: 13px; color: rgba(200, 230, 212, 0.72); line-height: 1.7; }
 .mod-cta {
   display: inline-flex; align-items: center; gap: 6px;
-  font-size: 12px; color: var(--accent-dim); margin-top: 18px;
+  font-size: 12px; color: var(--jade); margin-top: 18px;
   font-weight: 500; opacity: 0; transform: translateY(5px);
   transition: all 0.3s;
 }
 .mod-card:hover .mod-cta { opacity: 1; transform: translateY(0); }
 .mod-cta-arr { transition: transform 0.25s; }
 .mod-card:hover .mod-cta-arr { transform: translateX(4px); }
+
+/* ─── NOSOTROS & CASOS ────────────────────────────── */
+#nosotros {
+  padding: 120px 48px;
+  background: var(--glass-bg-dark);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-border);
+}
+.nosotros-inner {
+  max-width: 1100px; margin: 0 auto;
+}
+.nosotros-grid {
+  display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px;
+  align-items: center; margin-bottom: 80px;
+}
+.nosotros-col-left {
+  display: flex; flex-direction: column; align-items: flex-start;
+}
+.nosotros-p {
+  font-size: 16px; font-weight: 300; line-height: 1.8;
+  color: rgba(200, 230, 212, 0.75); margin-top: 10px;
+}
+.nosotros-col-right {
+  display: flex; flex-direction: column; gap: 20px;
+}
+.mv-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(107, 168, 130, 0.1);
+  border-radius: var(--radius-md); padding: 24px;
+  transition: all 0.3s ease;
+}
+.mv-card:hover {
+  background: rgba(107, 168, 130, 0.04);
+  border-color: rgba(107, 168, 130, 0.25);
+}
+.mv-title {
+  font-family: var(--font-body); font-size: 16px; font-weight: 600;
+  color: var(--menta); margin-bottom: 8px; text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.mv-desc {
+  font-size: 13.5px; color: rgba(200, 230, 212, 0.6); line-height: 1.6;
+}
+.nosotros-divider {
+  height: 1px; background: rgba(107, 168, 130, 0.15); margin: 20px 0 80px 0;
+}
+.caso-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+}
+.caso-left {
+  display: flex; flex-direction: column; align-items: flex-start;
+}
+.caso-p {
+  font-size: 15px; font-weight: 300; line-height: 1.75;
+  color: rgba(200, 230, 212, 0.65); margin-bottom: 32px;
+}
+.caso-stats-mini {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%;
+}
+.c-stat-item {
+  background: rgba(255, 255, 255, 0.01);
+  border-left: 2px solid var(--jade);
+  padding: 10px 16px;
+}
+.c-stat-val {
+  font-family: var(--font-display); font-size: 28px; color: var(--menta);
+  line-height: 1.1;
+}
+.c-stat-lbl {
+  font-size: 10px; color: var(--salvia); letter-spacing: 0.02em; margin-top: 6px;
+  line-height: 1.3;
+}
+.caso-right {
+  display: flex; flex-direction: column;
+}
+.caso-detail-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(107, 168, 130, 0.12);
+  border-radius: var(--radius-md); padding: 32px;
+  display: flex; flex-direction: column; gap: 24px;
+}
+.cd-section {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.cd-badge {
+  display: inline-block; align-self: flex-start;
+  font-size: 8.5px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 3px 8px; border-radius: 4px;
+}
+.badge-red {
+  color: #E74C3C; background: rgba(231, 76, 60, 0.1);
+}
+.badge-green {
+  color: var(--menta); background: rgba(107, 168, 130, 0.15);
+}
+.badge-gold {
+  color: #F1C40F; background: rgba(241, 196, 15, 0.1);
+}
+.cd-text {
+  font-size: 13px; color: rgba(200, 230, 212, 0.7); line-height: 1.65;
+}
+.cd-text strong {
+  color: var(--white);
+}
+
+/* Responsive Nosotros */
+@media (max-width: 900px) {
+  .nosotros-grid, .caso-grid {
+    grid-template-columns: 1fr; gap: 40px;
+  }
+  .caso-stats-mini {
+    margin-bottom: 20px;
+  }
+}
 
 /* ─── ROI ──────────────────────────────────────────── */
 #roi {
@@ -942,6 +1057,7 @@ footer {
   <ul class="nav-links">
     <li><a href="#problema">El Problema</a></li>
     <li><a href="#modulos">Módulos</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
     <li><a href="#roi">Calculadora ROI</a></li>
     <li><a href="#planes">Planes</a></li>
     <li><a href="#contacto" class="nav-cta">Solicitar Demo →</a></li>
@@ -1094,6 +1210,72 @@ footer {
       <div class="mod-name">Academia SSOMA</div>
       <div class="mod-desc">Capacitación interactiva basada en manual APSSOMA. Evalúa y certifica competencias de trabajadores. Genera certificados PDF corporativos al instante.</div>
       <a href="#contacto" class="mod-cta">Ver módulo <span class="mod-cta-arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NOSOTROS & CASOS ══════════════════════════════ -->
+<section id="nosotros">
+  <div class="nosotros-inner">
+    <!-- Fila 1: Quiénes Somos, Misión y Visión -->
+    <div class="nosotros-grid reveal">
+      <div class="nosotros-col-left">
+        <div class="sec-lbl">Sobre Nosotros</div>
+        <h2 class="sec-h2" style="text-align:left; margin:0 0 24px 0;">El tejido digital de tu <em>seguridad.</em></h2>
+        <p class="nosotros-p">En <strong>STROMA</strong>, fusionamos la ingeniería de cumplimiento SSOMA con inteligencia artificial de vanguardia. Nacimos en Perú para transformar los procesos regulatorios lentos y manuales en sistemas automatizados y predictivos.</p>
+      </div>
+      <div class="nosotros-col-right">
+        <div class="mv-card">
+          <div class="mv-title">Nuestra Misión</div>
+          <div class="mv-desc">Simplificar y automatizar la gestión de seguridad, salud y medio ambiente (SSOMA) para proteger la vida y asegurar la continuidad de las operaciones de alta exigencia.</div>
+        </div>
+        <div class="mv-card">
+          <div class="mv-title">Nuestra Visión</div>
+          <div class="mv-desc">Convertirnos en el estándar de infraestructura de cumplimiento predictivo en América Latina, integrando tecnología viva con la legislación local.</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="nosotros-divider"></div>
+    
+    <!-- Fila 2: Caso de Estudio Real (Simulado) -->
+    <div class="caso-grid reveal d1">
+      <div class="caso-left">
+        <div class="sec-lbl">Caso de Estudio Real</div>
+        <h2 class="sec-h2" style="text-align:left; margin:0 0 20px 0;">Impacto en <em>Consorcio Industrial del Sur</em></h2>
+        <p class="caso-p">Una de las constructoras y proveedoras logísticas más grandes de la región enfrentaba problemas severos en la digitalización de sus firmas de seguridad y matrices IPERC descentralizadas antes de su auditoría anual.</p>
+        
+        <div class="caso-stats-mini">
+          <div class="c-stat-item">
+            <div class="c-stat-val">12 UITs</div>
+            <div class="c-stat-lbl">Evitadas en multas SUNAFIL</div>
+          </div>
+          <div class="c-stat-item">
+            <div class="c-stat-val">85%</div>
+            <div class="c-stat-lbl">Menos horas administrativas</div>
+          </div>
+          <div class="c-stat-item">
+            <div class="c-stat-val">0</div>
+            <div class="c-stat-lbl">Accidentes graves reportados</div>
+          </div>
+        </div>
+      </div>
+      <div class="caso-right">
+        <div class="caso-detail-card">
+          <div class="cd-section">
+            <span class="cd-badge badge-red">Desafío previo</span>
+            <p class="cd-text">Inspecciones manuales ineficientes, 180 horas mensuales gastadas en papeleo de IPERC de 250 operarios, y retraso crítico en la recolección de firmas para charlas de 5 minutos.</p>
+          </div>
+          <div class="cd-section">
+            <span class="cd-badge badge-green">Solución STROMA</span>
+            <p class="cd-text">Despliegue del módulo de IPERC asistido por IA, recopilación de firmas biométricas móviles para charlas diarias y monitoreo automático CAPA.</p>
+          </div>
+          <div class="cd-section">
+            <span class="cd-badge badge-gold">Retorno de inversión (ROI)</span>
+            <p class="cd-text">Ahorro anual auditado de <strong>S/. 92,000 soles</strong> en horas-hombre de supervisión y levantamiento inmediato del 100% de observaciones en la auditoría SUNAFIL.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1371,6 +1553,7 @@ footer {
       </div>
       <div class="ft-links">
         <a href="#modulos">Módulos</a>
+        <a href="#nosotros">Nosotros</a>
         <a href="#planes">Planes</a>
         <a href="#contacto">Contacto</a>
         <a href="#">Privacidad</a>
